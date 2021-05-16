@@ -2,6 +2,9 @@ import './App.css';
 import Home from './components/home/home'
 import Login from './components/login/login'
 import SignUp from './components/login/signup'
+import testHome from "./components/home/home.component";
+import testProfile from "./components/login/profile.component";
+import testLogin from "./components/login/login.component";
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import {React, Component} from 'react';
 //import API from './utils/API';
@@ -44,6 +47,15 @@ class App extends Component {
               <li className="nav-item">
                 <Link className="nav-link" to={"/sign-up"}>Sign up</Link>
               </li>
+              <li className="nav-item">
+                <Link className="nav-link" to={"/testHome"}>TestHome</Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to={"/testLogin"}>TestLogin</Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to={"/testProfile"}>TestProfile</Link>
+              </li>
             </ul>
           </div>
         </div>
@@ -55,6 +67,9 @@ class App extends Component {
             <Route exact path="/home" component={Home} />
             <Route path="/sign-in" component={Login} />
             <Route path="/sign-up" component={SignUp} />
+            <Route path="/testHome" component={testHome} />
+            <Route path="/testLogin" component={testLogin} />
+            <Route path="/testProfile" component={testProfile} />
           </Switch>
         </div>
         </div>
