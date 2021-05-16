@@ -10,9 +10,10 @@ export default class Home extends React.Component {
    
     componentDidMount() {
       API
-        .get("https://localhost:8080/home")
+        .get("http://localhost:8080/home")
         .then(response => {
           const value = response.data;
+          console.log(response);
           this.setState({ value });
         })
         .catch(error => console.log(error));
@@ -21,7 +22,7 @@ export default class Home extends React.Component {
     render() {
       return (
         <div class="about">
-            <h3>Welcome to DiS <br/> The Social App for the di community<br/> { this.state.value.bold } </h3>
+            <h3>Welcome to DiS <br/> The Social App for the di community<br/> { this.state.value} </h3>
         </div>
       );
     }
