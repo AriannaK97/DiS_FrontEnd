@@ -8,7 +8,8 @@ class UserService {
         return axios.get(API_URL + 'all');
     }
 
-    getUserBoard() {
+
+    getAllUsers() {
         return axios.get(API_URL + 'users', { headers: authHeader() });
     }
 

@@ -7,15 +7,16 @@ export default class Home extends Component {
         super(props);
 
         this.state = {
-            content: ""
+            users: [],
+            message: null
         };
     }
 
     componentDidMount() {
-        UserService.getPublicContent().then(
+        UserService.getAllUsers().then(
             response => {
                 this.setState({
-                    content: response.data
+                    users: response.data
                 });
             },
             error => {
@@ -32,9 +33,27 @@ export default class Home extends Component {
     render() {
         return (
             <div className="container">
-                <header className="jumbotron">
-                    <h3>{this.state.content}</h3>
-                </header>
+                <table className="table">
+                    <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {
+                        this.state.users.map(
+                            user =>
+                                <tr key={user.username}>
+                                    <td>{user.username}</td>
+                                    <td>{user.email}</td>
+                                    <td>{user.phone}</td>
+                                </tr>
+                        )
+                    }
+                    </tbody>
+                </table>
             </div>
         );
     }
