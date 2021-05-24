@@ -20,6 +20,14 @@ class UserService {
     getAdminBoard() {
         return axios.get(API_URL + 'admin', { headers: authHeader() });
     }
+
+    postUserFeedPost(content, user){
+        return axios.post('http://localhost:8080/feed/post', {content ,user});
+    }
+
+    getUserNewsFeed(){
+        return axios.get('http://localhost:8080/feed');
+    }
 }
 
 export default new UserService();

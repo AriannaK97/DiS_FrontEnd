@@ -2,6 +2,9 @@
   text-align: center;
 }
 
+.navbarLinks {
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -23,9 +26,15 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
-
+/*bddef6*/
 .App-link {
-  color: #61dafb;
+  color: white;
+}
+
+.photo {
+  content: normal;
+  height: 6%;
+  width: 6%;
 }
 
 @keyframes App-logo-spin {

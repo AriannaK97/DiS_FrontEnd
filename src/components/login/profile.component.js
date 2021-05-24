@@ -14,10 +14,12 @@ export default class Profile extends Component {
         const { currentUser } = this.state;
 
         return (
+            <div className="auth-wrapper">
+            <div className="auth-inner">
             <div className="container">
                 <header className="jumbotron">
                     <h3>
-                        {/*{currentUser}*/}
+
                        <strong>{currentUser.user.username}</strong> Profile*
                     </h3>
                 </header>
@@ -32,6 +34,8 @@ export default class Profile extends Component {
                     {currentUser.user.email}
                 </p>
 
+            </div>
+            </div>
             </div>
         );
     }

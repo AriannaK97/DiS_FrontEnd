@@ -81,6 +81,8 @@ export default class Login extends Component {
 
     render() {
         return (
+            <div className="auth-wrapper">
+            <div className="auth-inner">
             <div className="col-md-12">
                 <div className="card card-container">
                     <img
@@ -146,6 +148,8 @@ export default class Login extends Component {
                         />
                     </Form>
                 </div>
+            </div>
+            </div>
             </div>
         );
     }

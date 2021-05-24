@@ -1,6 +1,5 @@
 import './App.css';
-import Home from './components/home/home'
-import Login from './components/login/login'
+import NewsFeed from './components/feed/feed.component'
 import SignUp from './components/login/signup'
 import testHome from "./components/home/home.component";
 import testProfile from "./components/login/profile.component";
@@ -8,8 +7,9 @@ import testLogin from "./components/login/login.component";
 import testRegister from "./components/login/register.component";
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import {React, Component} from 'react';
-//import API from './utils/API';
-import { BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
+import {Navbar, Nav} from "react-bootstrap";
+import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
+import Home from "./components/home/home.component";
 
 
 class App extends Component {
@@ -21,7 +21,7 @@ class App extends Component {
     };
   }
 
-  setLogedIn = (cond) => {
+  setLoggedIn = (cond) => {
     this.setState("loggedIn", cond);
   }
 
@@ -29,59 +29,57 @@ class App extends Component {
       this.setState("username", username);
   }
 
+
   render() {
+    const isLoggedIn = localStorage.getItem('token');
+    //this.setUsername(localStorage.getItem('user').username);
+    let loginText;
+    if (isLoggedIn) {
+      loginText = <h3>Signed in as: <a href="/testProfile"><strong>{this.state.username}</strong></a></h3>;
+    } else {
+      loginText = '';
+    }
     return (
       <Router>
       <div className="App">
-
-      <nav className="navbar navbar-expand-lg navbar-light fixed-top">
-        <div className="container">
-          <Link className="navbar-brand" to={"/sign-in"}>DiS</Link>
-          <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
-            <ul className="navbar-nav ml-auto">
-            <li className="nav-item">
-                <Link className="nav-link" to={"/home"}>Home</Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to={"/sign-in"}>Login</Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to={"/sign-up"}>Sign up</Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to={"/testHome"}>TestHome</Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to={"/testLogin"}>TestLogin</Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to={"/testRegister"}>TestRegister</Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to={"/testProfile"}>TestProfile</Link>
-              </li>
-            </ul>
+        <Navbar bg="dark" variant="dark" >
+          <div className="d-md-flex d-block flex-row mx-md-auto mx-0">
+          <Navbar.Brand href="/home" >
+            DiS
+            {/*<img className="photo" src={logo} alt={logo}/>*/}
+          </Navbar.Brand>
+            <Nav className="mr-auto">
+            <Nav.Link href="/home">Home</Nav.Link>
+            <Nav.Link href="/testRegister">Register</Nav.Link>
+            <Nav.Link href="/testLogin">Login</Nav.Link>
+            <Nav.Link href="/feed">NewsFeed</Nav.Link>
+          </Nav>
+          <Navbar.Collapse className="justify-content-end" on>
+            <Navbar.Text>  {loginText}  </Navbar.Text>
+          </Navbar.Collapse>
           </div>
-        </div>
-      </nav>
-
-        <div className="auth-wrapper">
-        <div className="auth-inner">
+        </Navbar>
+        {/*<div className="auth-wrapper">*/}
+        {/*<div className="auth-inner">*/}
           <Switch>
             <Route exact path="/home" component={Home} />
-            <Route path="/sign-in" component={Login} />
             <Route path="/sign-up" component={SignUp} />
             <Route path="/testHome" component={testHome} />
             <Route path="/testLogin" component={testLogin} />
             <Route path="/testRegister" component={testRegister} />
             <Route path="/testProfile" component={testProfile} />
+            <Route path="/feed" component={NewsFeed} />
           </Switch>
         </div>
-        </div>
-        </div>
+        {/*</div>*/}
+        {/*</div>*/}
+
         </Router> 
     );
   }
+
+
+
 }
 
 export default App;
