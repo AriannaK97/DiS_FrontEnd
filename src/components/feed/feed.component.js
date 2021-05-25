@@ -67,18 +67,29 @@ const useStyles = makeStyles((theme) => ({
 export default function PostCard() {
     const classes = useStyles();
     const [posts, setPosts] = useState([]);
+    const [reaction, setReaction] = useState(null);
     const user = AuthService.getCurrentUser();
+    const [reactionColour, setReactionColour] = useState('gray');
+    const [reactionType, setReactionType] = useState(0);
     const username = user.user.username;
 
 
     useEffect(async () => {
             const result = await UserService.getUserNewsFeed().then(response => {
                 setPosts(response.data);
-                //console.log(response.data)
+                console.log(response.data)
             })
         },
         [],
     );
+
+    const handleReaction = (evt, post) => {
+        evt.preventDefault();
+        UserService.postReaction(post.id, username, ).then(response => response.status);
+        UserService.getReaction().then(response => setReaction(response.data));
+        setReactionColour('red');
+    }
+
 
     let cardsArray = null
     if(posts){
@@ -88,7 +99,7 @@ export default function PostCard() {
                     <CardHeader         classes={{title: classes.CardHeader,subheader: classes.CardHeader}}
                             style={{ color:'whitesmoke'}}
                             avatar={
-                            <Avatar aria-label="post" className={classes.avatar}>
+                            <Avatar alt={post.user} aria-label="post" className={classes.avatar}>
                                 R
                             </Avatar>
                         }
@@ -107,10 +118,10 @@ export default function PostCard() {
                     </CardContent>
                     <CardActions disableSpacing>
                         <IconButton aria-label="add to favorites">
-                            <FavoriteIcon />
+                            <FavoriteIcon id={post.id} style={{color: reactionColour}} onClick={handleReaction}/>
                         </IconButton>
                         <IconButton aria-label="share">
-                            <ShareIcon />
+                            <ShareIcon style={{color: 'green'}}/>
                         </IconButton>
                     </CardActions>
                 </Card>

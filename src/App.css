@@ -2,7 +2,43 @@
   text-align: center;
 }
 
-.navbarLinks {
+.img{
+  /*height: 1000%;*/
+  /*width: 1000%;*/
+  pointer-events: none;
+}
+
+.Navbar {
+  margin: fill;
+  border: #282c34;
+  height: 80px;
+}
+
+.logo{
+  font-weight: bolder;
+  color: cornflowerblue!important;
+}
+
+.searchBar {
+  background: whitesmoke;
+  border-radius: 50px 50px 50px 50px !important;
+  margin:auto !important;
+  width: 100% !important;
+}
+
+.Container{
+  margin: auto;
+  border: #282c34;
+}
+.navbarLinksRight {
+  color: whitesmoke!important;
+  font-weight: bold;
+}
+
+.navbarLinksLeft {
+
+  color: whitesmoke!important;
+  font-weight: bold;
 }
 
 .App-logo {
@@ -21,8 +57,8 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  /*align-items: center;*/
+  /*justify-content: center;*/
   font-size: calc(10px + 2vmin);
   color: white;
 }

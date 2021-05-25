@@ -7,9 +7,12 @@ import testLogin from "./components/login/login.component";
 import testRegister from "./components/login/register.component";
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import {React, Component} from 'react';
-import {Navbar, Nav} from "react-bootstrap";
+import {Navbar, Nav, Row, Col, Form, Container} from "react-bootstrap";
 import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import Home from "./components/home/home.component";
+import logo from "./logo_files/dis_logo.png"
+import {FormControl} from "@material-ui/core";
+import Button from "@material-ui/core/Button";
 
 
 class App extends Component {
@@ -29,6 +32,22 @@ class App extends Component {
       this.setState("username", username);
   }
 
+  handleLoginRegLink = (isLoggedIn) => {
+    if(this.state.loggedIn===false){
+      return(
+          <div>
+            <Nav.Link className={"navbarLinksRight"} href="/testRegister">Register</Nav.Link>
+            <Nav.Link className={"navbarLinksRight"} href="/testLogin">Login</Nav.Link>
+          </div>
+      );
+    }else{
+      return(
+          <div>
+            <Nav.Link className={"navbarLinksRight"} href="/testProfile">Profile</Nav.Link>
+          </div>
+      );
+    }
+  }
 
   render() {
     const isLoggedIn = localStorage.getItem('token');
@@ -42,22 +61,33 @@ class App extends Component {
     return (
       <Router>
       <div className="App">
-        <Navbar bg="dark" variant="dark" >
-          <div className="d-md-flex d-block flex-row mx-md-auto mx-0">
-          <Navbar.Brand href="/home" >
-            DiS
-            {/*<img className="photo" src={logo} alt={logo}/>*/}
+        <Navbar bg="dark" variant="dark" className={"Navbar"} expand="lg">
+          <Col className="d-md-flex d-block flex-row mx-md-auto mx-0">
+          <Navbar.Brand href="/home" className={"logo"}>DiS
+            {/*<img className="photo" src={logo} alt={logo} />*/}
           </Navbar.Brand>
-            <Nav className="mr-auto">
-            <Nav.Link href="/home">Home</Nav.Link>
-            <Nav.Link href="/testRegister">Register</Nav.Link>
-            <Nav.Link href="/testLogin">Login</Nav.Link>
-            <Nav.Link href="/feed">NewsFeed</Nav.Link>
+          {/*</Col>*/}
+          {/*<Col className="d-md-flex d-block flex-row mx-md-auto mx-0">*/}
+            <Nav className="mr-auto navbarLinks">
+            {/*<Nav.Link className={"navbarLinksLeft"} href="/home">Home</Nav.Link>*/}
+            <Nav.Link className={"navbarLinksLeft"} href="/feed">NewsFeed</Nav.Link>
+            <Nav.Link className={"navbarLinksLeft"} href="/forum">Forum</Nav.Link>
           </Nav>
-          <Navbar.Collapse className="justify-content-end" on>
+          </Col>
+          <Col className="d-md-flex d-block flex-row mx-md-auto mx-0">
+            <Form className="d-md-flex d-block flex-row mx-md-auto mx-8 searchBar" >
+              <Form.Control type="text" placeholder="Search" className="searchBar" />
+              {/*<Button variant="outline-info" >Search</Button>*/}
+            </Form>
+          </Col>
+          <Col className="d-md-flex d-block flex-row mx-md-auto mx-0">
+          <Navbar.Collapse className="justify-content-end navbarLinks" on>
+            <Nav.Link className={"navbarLinksRight"} href="/testRegister">Register</Nav.Link>
+            <Nav.Link className={"navbarLinksRight"} href="/testLogin">Login</Nav.Link>
             <Navbar.Text>  {loginText}  </Navbar.Text>
           </Navbar.Collapse>
-          </div>
+          </Col>
+
         </Navbar>
         {/*<div className="auth-wrapper">*/}
         {/*<div className="auth-inner">*/}
@@ -73,7 +103,6 @@ class App extends Component {
         </div>
         {/*</div>*/}
         {/*</div>*/}
-
         </Router> 
     );
   }
