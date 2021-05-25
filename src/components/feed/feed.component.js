@@ -12,6 +12,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import UserService from "../../services/user.service";
+import AuthService from "../../services/auth.service"
 import Grid from "@material-ui/core/Grid";
 import FormDialog from "./postForm.component";
 
@@ -65,56 +66,57 @@ const useStyles = makeStyles((theme) => ({
 
 export default function PostCard() {
     const classes = useStyles();
-    const [posts, setPosts] = useState(null);
-    const user = localStorage.getItem('user');
-    const username = user.username;
+    const [posts, setPosts] = useState([]);
+    const user = AuthService.getCurrentUser();
+    const username = user.user.username;
 
 
-    useEffect(() => {
-            UserService.getUserNewsFeed().then(response => {
-                setPosts(response.data)
-                console.log(response.data)
+    useEffect(async () => {
+            const result = await UserService.getUserNewsFeed().then(response => {
+                setPosts(response.data);
+                //console.log(response.data)
             })
         },
         [],
     );
 
     let cardsArray = null
-    if(posts !== null)
-    cardsArray = posts.map(post => (
-        <Grid item key={post.id} className={classes.cardStyle}>
-            <Card id={post.id} style={{ color:'whitesmoke'}} className={classes.root}>
-                <CardHeader         classes={{title: classes.CardHeader,subheader: classes.CardHeader}}
-                        style={{ color:'whitesmoke'}}
-                        avatar={
-                        <Avatar aria-label="post" className={classes.avatar}>
-                            R
-                        </Avatar>
-                    }
-                    action={
-                        <IconButton aria-label="settings">
-                            <MoreVertIcon />
+    if(posts){
+        cardsArray = posts.map(post => (
+            <Grid item key={post.id} className={classes.cardStyle}>
+                <Card id={post.id} style={{ color:'whitesmoke'}} className={classes.root}>
+                    <CardHeader         classes={{title: classes.CardHeader,subheader: classes.CardHeader}}
+                            style={{ color:'whitesmoke'}}
+                            avatar={
+                            <Avatar aria-label="post" className={classes.avatar}>
+                                R
+                            </Avatar>
+                        }
+                        action={
+                            <IconButton aria-label="settings">
+                                <MoreVertIcon />
+                            </IconButton>
+                        }
+                        title={post.user}
+                        subheader={post.postTime}
+                    />
+                    <CardContent>
+                        <Typography variant="body2" color="textSecondary" component="p" style={{ color:'whitesmoke'}}>
+                            {post.content}
+                        </Typography>
+                    </CardContent>
+                    <CardActions disableSpacing>
+                        <IconButton aria-label="add to favorites">
+                            <FavoriteIcon />
                         </IconButton>
-                    }
-                    title={user.username}
-                    subheader={post.postTime}
-                />
-                <CardContent>
-                    <Typography variant="body2" color="textSecondary" component="p" style={{ color:'whitesmoke'}}>
-                        {post.content}
-                    </Typography>
-                </CardContent>
-                <CardActions disableSpacing>
-                    <IconButton aria-label="add to favorites">
-                        <FavoriteIcon />
-                    </IconButton>
-                    <IconButton aria-label="share">
-                        <ShareIcon />
-                    </IconButton>
-                </CardActions>
-            </Card>
-        </Grid>
-    ));
+                        <IconButton aria-label="share">
+                            <ShareIcon />
+                        </IconButton>
+                    </CardActions>
+                </Card>
+            </Grid>
+        ));
+    }
 
 
     return (

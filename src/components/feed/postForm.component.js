@@ -59,8 +59,10 @@ export default function FormDialog() {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
     const [content, setContent] = useState(null);
-    const [user, setUser] = useState(null);
+    //const [username, setUsername] = useState(null);
     const [posted, setPosted] = useState(false);
+    const user = AuthService.getCurrentUser()
+    const username = null//user.user.username
 
     let alertBanner = null
     if(posted === true) {
@@ -71,10 +73,8 @@ export default function FormDialog() {
     }
 
     const handleSubmit = (evt) => {
-        setUser(AuthService.getCurrentUser());
         evt.preventDefault();
-        setUser(AuthService.getCurrentUser());
-        UserService.postUserFeedPost(content, user).then(response => response.status);
+        UserService.postUserFeedPost(content, username).then(response => response.status);
         setPosted(true);
         setOpen(false);
         setContent(null);

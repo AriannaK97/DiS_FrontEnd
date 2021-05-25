@@ -21,8 +21,8 @@ class UserService {
         return axios.get(API_URL + 'admin', { headers: authHeader() });
     }
 
-    postUserFeedPost(content, user){
-        return axios.post('http://localhost:8080/feed/post', {content ,user});
+    postUserFeedPost(content, username){
+        return axios.post('http://localhost:8080/feed/post', {content ,username});
     }
 
     getUserNewsFeed(){
