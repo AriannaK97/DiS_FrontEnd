@@ -12,6 +12,12 @@
     height: 100vh;
 }
 
+.label {
+    margin: auto auto 5% auto;
+    font-weight: bolder !important;
+    font-size: large;
+}
+
 .paper {
     width: 400px !important;
     /*margin: theme.spacing(10, 4);*/
@@ -50,7 +56,7 @@
 }
 
 .card{
-    padding: 60px 20px 60px 20px;
+    padding: 50px 20px 50px 20px;
     margin: auto;
     border-radius: 16px!important;
     border-width: 1px;
