@@ -68,10 +68,13 @@
 }
 
 .photo {
+  margin-top: 1%;
   content: normal;
-  height: 6%;
-  width: 6%;
+
+  /*height: 6%;*/
+  /*width: 6%;*/
 }
+
 
 @keyframes App-logo-spin {
   from {

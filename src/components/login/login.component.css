@@ -1,0 +1,76 @@
+.alignItemsAndJustifyContent {
+    width: 600px !important;
+    /*height: 100% !important;*/
+    display: flex;
+    /*flexDirection: "column";*/
+    align-items: center;
+    justify-content: center;
+    margin: 5% auto auto auto;
+}
+
+.root {
+    height: 100vh;
+}
+
+.paper {
+    width: 400px !important;
+    /*margin: theme.spacing(10, 4);*/
+    margin: auto auto auto auto;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 16px;
+    border-width: 1px;
+    background-color: #343a40 !important;
+    color: whitesmoke;
+}
+
+.avatar {
+    /*margin: theme.spacing(1);*/
+    /*backgroundColor: theme.palette.secondary.main;*/
+    background-color: cornflowerblue;
+}
+
+.form {
+    width: 100%; /*Fix IE 11 issue.*/
+    /*marginTop: theme.spacing(1);*/
+    margin: auto;
+    border-radius: 20px !important;
+    border-width: 1px;
+    /*color: "whitesmoke"*/
+}
+
+.textField {
+    background-color: whitesmoke;
+}
+
+.submit {
+    /*margin: theme.spacing(3; 0; 2);*/
+}
+
+.card{
+    padding: 60px 20px 60px 20px;
+    margin: auto;
+    border-radius: 16px!important;
+    border-width: 1px;
+    background-color: #343a40 !important;
+}
+
+/*.multilineColor{*/
+/*color:'darkslategrey';*/
+/*backgroundColor: 'whitesmoke';*/
+/*borderColor: 'green';*/
+/*'& input:valid + fieldset': {*/
+/*                              borderColor: 'green';*/
+/*                              borderWidth: 2;*/
+/*                          };*/
+/*'& input:invalid + fieldset': {*/
+/*                                borderColor: 'red';*/
+/*                                borderWidth: 2;*/
+/*                            };*/
+/*'& input:valid:focus + fieldset': {*/
+/*                                    borderLeftWidth: 6;*/
+/*                                    padding: '4px !important'; // override inline-style*/
+/*                                };*/
+/*}*/

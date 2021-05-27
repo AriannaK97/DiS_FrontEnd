@@ -1,5 +1,6 @@
 import axios from 'axios';
 import authHeader from './auth-header';
+import AuthService from "./auth.service";
 
 const API_URL = 'http://localhost:8080/api/tests/';
 
@@ -26,7 +27,7 @@ class UserService {
     }
 
     getUserNewsFeed(){
-        return axios.get('http://localhost:8080/feed');
+        return axios.get('http://localhost:8080/feed/newsfeed/'+ AuthService.getCurrentUser().user.username);
     }
 
     postReaction(postId, username, reactionType){

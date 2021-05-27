@@ -62,7 +62,7 @@ export default function FormDialog() {
     //const [username, setUsername] = useState(null);
     const [posted, setPosted] = useState(false);
     const user = AuthService.getCurrentUser()
-    const username = null//user.user.username
+    const username = user.user.username
 
     let alertBanner = null
     if(posted === true) {

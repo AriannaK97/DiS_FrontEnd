@@ -4,6 +4,16 @@ import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 
 import AuthService from "../../services/auth.service";
+import Avatar from "@material-ui/core/Avatar";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import "./login.component.css"
+import * as theme from "@material-ui/system";
+import Grid from "@material-ui/core/Grid";
+import Link from "@material-ui/core/Link";
+import Box from "@material-ui/core/Box";
+//import {Copyright} from "@material-ui/icons";
+import Typography from "@material-ui/core/Typography";
+import {green} from "@material-ui/core/colors";
 
 const required = value => {
     if (!value) {
@@ -14,6 +24,20 @@ const required = value => {
         );
     }
 };
+
+function Copyright() {
+    return (
+        <Typography variant="body2" color="textSecondary" align="center" style={{color: "whitesmoke"}}>
+            {'Copyright © '}
+            <Link color="inherit" href="https://material-ui.com/" style={{color: "whitesmoke"}}>
+                DiS
+            </Link>{' '}
+            {new Date().getFullYear()}
+            {'.'}
+        </Typography>
+    );
+}
+
 
 export default class Login extends Component {
     constructor(props) {
@@ -55,7 +79,8 @@ export default class Login extends Component {
         if (this.checkBtn.context._errors.length === 0) {
             AuthService.login(this.state.username, this.state.password).then(
                 () => {
-                    this.props.history.push("/testProfile");
+                    this.props.history.push("/feed/newsfeed/"+this.state.username);
+                    //this.props.history.push("/testProfile");
                     window.location.reload();
                 },
                 error => {
@@ -80,16 +105,15 @@ export default class Login extends Component {
     }
 
     render() {
+
         return (
-            <div className="auth-wrapper">
-            <div className="auth-inner">
+            <div className=" alignItemsAndJustifyContent">
+            {/*<div className="auth-inner">*/}
             <div className="col-md-12">
-                <div className="card card-container">
-                    <img
-                        src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-                        alt="profile-img"
-                        className="profile-img-card"
-                    />
+                <div className="card card-container paper " style={{margin: "auto"}}>
+                    <Avatar className={'avatar'} style={{backgroundColor: "cornflowerblue", margin: "auto"}}>
+                        <LockOutlinedIcon />
+                    </Avatar>
 
                     <Form
                         onSubmit={this.handleLogin}
@@ -125,6 +149,7 @@ export default class Login extends Component {
                             <button
                                 className="btn btn-primary btn-block"
                                 disabled={this.state.loading}
+                                style={{backgroundColor: "green"}}
                             >
                                 {this.state.loading && (
                                     <span className="spinner-border spinner-border-sm"></span>
@@ -141,15 +166,30 @@ export default class Login extends Component {
                             </div>
                         )}
                         <CheckButton
-                            style={{ display: "none" }}
+                            style={{ display: "none"}}
                             ref={c => {
                                 this.checkBtn = c;
                             }}
                         />
+                        <Grid container>
+                            <Grid item xs>
+                                <Link href="#" variant="body2" style={{color: "cornflowerblue"}}>
+                                    Forgot password?
+                                </Link>
+                            </Grid>
+                            <Grid item xs>
+                                <Link href="#" variant="body2" style={{color: "cornflowerblue"}}>
+                                    {"Don't have an account? Sign Up"}
+                                </Link>
+                            </Grid>
+                        </Grid>
+                        <Box mt={1} style={{marginTop: "10%"}}>
+                            <Copyright />
+                        </Box>
                     </Form>
                 </div>
             </div>
-            </div>
+            {/*</div>*/}
             </div>
         );
     }
