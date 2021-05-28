@@ -12,7 +12,8 @@ import {BrowserRouter as Router, Switch, Route, Redirect} from "react-router-dom
 import Home from "./components/home/home.component";
 import Button from "@material-ui/core/Button";
 import AuthService from "./services/auth.service"
-import logout from "./components/login/logout.component"
+import LogOut from "./components/login/logout.component"
+import Divider from "@material-ui/core/Divider";
 
 class App extends Component {
   constructor(props) {
@@ -32,14 +33,11 @@ class App extends Component {
       this.setState("username", username);
   }
 
-  onLogOut = () => {
-      AuthService.logout();
-      //Todo redirect
-      this.props.history.push("/testLogin")
-      //return (<Redirect  to="/testLogin" />);
-  }
+    forceAppUpdate() {
+        this.forceUpdate();
+    }
 
-  render() {
+    render() {
     //const isLoggedIn = localStorage.getItem('token');
 
     if(AuthService.getCurrentUser() == null){
@@ -79,6 +77,7 @@ class App extends Component {
                     <Navbar bg="dark" variant="dark" className={"Navbar"} expand="lg">
                         <Col className="d-md-flex d-block flex-row mx-md-auto mx-0">
                             <Navbar.Brand href="/home" className={"logo"}>DiS</Navbar.Brand>
+                            <Divider orientation="vertical" style={{backgroundColor:"whitesmoke"}} flexItem />
                             <Nav className="mr-auto navbarLinks">
                                 <Nav.Link className={"navbarLinksLeft"} href="/feed">NewsFeed</Nav.Link>
                                 <Nav.Link className={"navbarLinksLeft"} href="/forum">Forum</Nav.Link>
@@ -93,7 +92,8 @@ class App extends Component {
                             <Navbar.Collapse className="justify-content-end navbarLinks" on>
                                 <Nav.Link className={"navbarLinksRight"} href="/testProfile">Messages</Nav.Link>
                                 <Nav.Link className={"navbarLinksRight"} href="/testProfile">Profile</Nav.Link>
-                                <Button className={"navbarLinksRight navbar-btn"} onClick={logout}>Log Out</Button>
+                                <Divider orientation="vertical" style={{backgroundColor:"whitesmoke"}} flexItem />
+                                <Nav.Link className={"navbarLinksRight navbar-btn"} href="/logout">Log Out</Nav.Link>
                             </Navbar.Collapse>
                         </Col>
 
@@ -106,6 +106,7 @@ class App extends Component {
                         <Route path="/testProfile" component={testProfile} />
                         <Route path="/feed" component={NewsFeed} />
                         <Route path="/forum" component={Forum} />
+                        <Route path="/logout" component={LogOut} />
                     </Switch>
                 </div>
             </Router>
