@@ -17,6 +17,7 @@ import Grid from "@material-ui/core/Grid";
 import FormDialog from "./postForm.component";
 import SentimentSatisfiedAltIcon from '@material-ui/icons/SentimentSatisfiedAlt';
 import SentimentVeryDissatisfiedIcon from '@material-ui/icons/SentimentVeryDissatisfied';
+import {Redirect} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -69,11 +70,9 @@ const useStyles = makeStyles((theme) => ({
 export default function PostCard() {
     const classes = useStyles();
     const [posts, setPosts] = useState([ ]);
-    const [reaction, setReaction] = useState(null);
-    const [reactionColour, setReactionColour] = useState('gray');
     const [nullReactionState, setNullReactionState] = useState(0);
-    const [happyReactioState, setHappyReactionColor] =  useState(1);
-    const [sadReactioState, setSadReactionState] = useState(2);
+    const [happyReactionState, setHappyReactionColor] =  useState(1);
+    const [sadReactionState, setSadReactionState] = useState(2);
     const user = AuthService.getCurrentUser();
     const username = useState(user.user.username);
 
@@ -89,6 +88,7 @@ export default function PostCard() {
 
     const handleReaction = (id, username, reactionType) => {
         UserService.postReaction(id, username, reactionType).then(response => response.status);
+        return <Redirect to={"/feed"}/>
     }
 
     const renderReactionIcons = (post) => {
@@ -96,10 +96,10 @@ export default function PostCard() {
             return(
                 <div>
                 <IconButton aria-label="add to favorites">
-                    <SentimentSatisfiedAltIcon id={post.postId} style={{color: 'gray'}} onClick={() => handleReaction(post.postId, username[0], happyReactioState)}/>
+                    <SentimentSatisfiedAltIcon id={post.postId} style={{color: 'gray'}} onClick={() => handleReaction(post.postId, username[0], happyReactionState)}/>
                 </IconButton>
                 <IconButton aria-label="add to favorites">
-                    <SentimentVeryDissatisfiedIcon id={post.postId} style={{color: "gray"}} onClick={() => handleReaction(post.postId, username[0], sadReactioState)}/>
+                    <SentimentVeryDissatisfiedIcon id={post.postId} style={{color: "gray"}} onClick={() => handleReaction(post.postId, username[0], sadReactionState)}/>
                 </IconButton>
                 </div>
             );
@@ -110,7 +110,7 @@ export default function PostCard() {
                         <SentimentSatisfiedAltIcon id={post.postId} style={{color: 'forestgreen'}} onClick={() => handleReaction(post.postId, username[0], nullReactionState)}/>
                     </IconButton>
                     <IconButton aria-label="add to favorites">
-                        <SentimentVeryDissatisfiedIcon id={post.postId} style={{color: "gray"}} onClick={() => handleReaction(post.postId, username[0], sadReactioState)}/>
+                        <SentimentVeryDissatisfiedIcon id={post.postId} style={{color: "gray"}} onClick={() => handleReaction(post.postId, username[0], sadReactionState)}/>
                     </IconButton>
                 </div>
             );
@@ -118,7 +118,7 @@ export default function PostCard() {
             return(
                 <div>
                     <IconButton aria-label="add to favorites">
-                        <SentimentSatisfiedAltIcon id={post.postId} style={{color: 'gray'}} onClick={() => handleReaction(post.postId, username[0], happyReactioState)}/>
+                        <SentimentSatisfiedAltIcon id={post.postId} style={{color: 'gray'}} onClick={() => handleReaction(post.postId, username[0], happyReactionState)}/>
                     </IconButton>
                     <IconButton aria-label="add to favorites">
                         <SentimentVeryDissatisfiedIcon id={post.postId} style={{color: "indianred"}} onClick={() => handleReaction(post.postId, username[0], nullReactionState)}/>

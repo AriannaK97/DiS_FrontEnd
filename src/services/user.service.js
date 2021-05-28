@@ -31,6 +31,7 @@ class UserService {
     }
 
     postReaction(postId, username, reactionType){
+        console.log(postId, username, reactionType);
         return axios.post('http://localhost:8080/feed/reaction',{postId, username, reactionType});
     }
 

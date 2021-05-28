@@ -15,6 +15,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import UserService from "../../services/user.service"
 import AuthService from "../../services/auth.service";
 import Avatar from "@material-ui/core/Avatar";
+import {Redirect} from "react-router-dom";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -60,7 +61,6 @@ export default function FormDialog() {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
     const [content, setContent] = useState(null);
-    //const [username, setUsername] = useState(null);
     const [posted, setPosted] = useState(false);
     const user = AuthService.getCurrentUser()
     const username = user.user.username
@@ -79,6 +79,7 @@ export default function FormDialog() {
         setPosted(true);
         setOpen(false);
         setContent(null);
+        return <Redirect to={"/feed"}/>
     }
 
     const handleClickOpen = () => {
