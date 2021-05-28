@@ -3,10 +3,12 @@ import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import { isEmail } from "validator";
-
 import "./login.component.css"
-
 import AuthService from "../../services/auth.service";
+import Grid from "@material-ui/core/Grid";
+import Link from "@material-ui/core/Link";
+import Box from "@material-ui/core/Box";
+import {Copyright} from "@material-ui/icons";
 
 const required = value => {
     if (!value) {
@@ -133,7 +135,7 @@ export default class Register extends Component {
 
     render() {
         return (
-            <div className="alignItemsAndJustifyContent">
+            <div className="alignItemsAndJustifyContent register">
                 {/*<div className="auth-inner">*/}
             <div className="col-md-12">
                 <div className="card card-container paper">
@@ -221,6 +223,17 @@ export default class Register extends Component {
                                 this.checkBtn = c;
                             }}
                         />
+                        <Grid container>
+                            <Grid item xs>
+                                <Link href="/testLogin" variant="body2" style={{color: "cornflowerblue"}}>
+                                    {"Already have an account? Log in"}
+                                </Link>
+                            </Grid>
+                        </Grid>
+                        <Box mt={1} style={{marginTop: "10%"}}>
+                            <Copyright />
+                        </Box>
+
                     </Form>
                 </div>
             </div>

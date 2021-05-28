@@ -178,8 +178,8 @@ export default class Login extends Component {
                                 </Link>
                             </Grid>
                             <Grid item xs>
-                                <Link href="#" variant="body2" style={{color: "cornflowerblue"}}>
-                                    {"Don't have an account? Sign Up"}
+                                <Link href="/testRegister" variant="body2" style={{color: "cornflowerblue"}}>
+                                    {"Don't have an account? Register"}
                                 </Link>
                             </Grid>
                         </Grid>
