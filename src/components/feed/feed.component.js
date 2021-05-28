@@ -15,6 +15,8 @@ import UserService from "../../services/user.service";
 import AuthService from "../../services/auth.service"
 import Grid from "@material-ui/core/Grid";
 import FormDialog from "./postForm.component";
+import SentimentSatisfiedAltIcon from '@material-ui/icons/SentimentSatisfiedAlt';
+import SentimentVeryDissatisfiedIcon from '@material-ui/icons/SentimentVeryDissatisfied';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -66,49 +68,82 @@ const useStyles = makeStyles((theme) => ({
 
 export default function PostCard() {
     const classes = useStyles();
-    const [posts, setPosts] = useState([]);
+    const [posts, setPosts] = useState([ ]);
     const [reaction, setReaction] = useState(null);
-    const user = AuthService.getCurrentUser();
     const [reactionColour, setReactionColour] = useState('gray');
-    const [reactionType, setReactionType] = useState(0);
-    const username = user.user.username;
+    const [nullReactionState, setNullReactionState] = useState(0);
+    const [happyReactioState, setHappyReactionColor] =  useState(1);
+    const [sadReactioState, setSadReactionState] = useState(2);
+    const user = AuthService.getCurrentUser();
+    const username = useState(user.user.username);
 
 
-    useEffect(async () => {
-            const result = await UserService.getUserNewsFeed().then(response => {
+    useEffect(() => {
+            UserService.getUserNewsFeed().then(response => {
                 setPosts(response.data);
-                console.log(response.data)
+                console.log(posts);
             })
         },
         [],
     );
 
-    const handleReaction = (evt, post) => {
-        evt.preventDefault();
-        UserService.postReaction(post.id, username, ).then(response => response.status);
-        UserService.getReaction().then(response => setReaction(response.data));
-        setReactionColour('red');
+    const handleReaction = (id, username, reactionType) => {
+        UserService.postReaction(id, username, reactionType).then(response => response.status);
     }
 
+    const renderReactionIcons = (post) => {
+        if(post.currentUserReaction === 0 || post.currentUserReaction === null){
+            return(
+                <div>
+                <IconButton aria-label="add to favorites">
+                    <SentimentSatisfiedAltIcon id={post.postId} style={{color: 'gray'}} onClick={() => handleReaction(post.postId, username[0], happyReactioState)}/>
+                </IconButton>
+                <IconButton aria-label="add to favorites">
+                    <SentimentVeryDissatisfiedIcon id={post.postId} style={{color: "gray"}} onClick={() => handleReaction(post.postId, username[0], sadReactioState)}/>
+                </IconButton>
+                </div>
+            );
+        }else if(post.currentUserReaction === 1){
+            return(
+                <div>
+                    <IconButton aria-label="add to favorites">
+                        <SentimentSatisfiedAltIcon id={post.postId} style={{color: 'forestgreen'}} onClick={() => handleReaction(post.postId, username[0], nullReactionState)}/>
+                    </IconButton>
+                    <IconButton aria-label="add to favorites">
+                        <SentimentVeryDissatisfiedIcon id={post.postId} style={{color: "gray"}} onClick={() => handleReaction(post.postId, username[0], sadReactioState)}/>
+                    </IconButton>
+                </div>
+            );
+        }else if(post.currentUserReaction === 2){
+            return(
+                <div>
+                    <IconButton aria-label="add to favorites">
+                        <SentimentSatisfiedAltIcon id={post.postId} style={{color: 'gray'}} onClick={() => handleReaction(post.postId, username[0], happyReactioState)}/>
+                    </IconButton>
+                    <IconButton aria-label="add to favorites">
+                        <SentimentVeryDissatisfiedIcon id={post.postId} style={{color: "indianred"}} onClick={() => handleReaction(post.postId, username[0], nullReactionState)}/>
+                    </IconButton>
+                </div>
+            );
+        }
+    }
 
     let cardsArray = null
     if(posts){
         cardsArray = posts.map(post => (
             <Grid item key={post.id} className={classes.cardStyle}>
                 <Card id={post.id} style={{ color:'whitesmoke'}} className={classes.root}>
-                    <CardHeader         classes={{title: classes.CardHeader,subheader: classes.CardHeader}}
-                            style={{ color:'whitesmoke'}}
-                            avatar={
-                            <Avatar alt={post.user} aria-label="post" className={classes.avatar}>
-                                R
-                            </Avatar>
+                    <CardHeader classes={{title: classes.CardHeader,subheader: classes.CardHeader}}
+                        style={{ color:'whitesmoke'}}
+                        avatar={
+                            <Avatar alt={post.username} aria-label="post" className={classes.avatar}/>
                         }
                         action={
                             <IconButton aria-label="settings">
                                 <MoreVertIcon />
                             </IconButton>
                         }
-                        title={post.user}
+                        title={post.username}
                         subheader={post.postTime}
                     />
                     <CardContent>
@@ -117,9 +152,13 @@ export default function PostCard() {
                         </Typography>
                     </CardContent>
                     <CardActions disableSpacing>
-                        <IconButton aria-label="add to favorites">
-                            <FavoriteIcon id={post.id} style={{color: reactionColour}} onClick={handleReaction}/>
-                        </IconButton>
+                        {renderReactionIcons(post)}
+                        {/*<IconButton aria-label="add to favorites">*/}
+                        {/*    <SentimentSatisfiedAltIcon id={post.postId} style={{color: reactionColour}} onClick={() => handleReaction(post.postId, username, 1)}/>*/}
+                        {/*</IconButton>*/}
+                        {/*<IconButton aria-label="add to favorites">*/}
+                        {/*    <SentimentVeryDissatisfiedIcon id={post.postId} style={{color: reactionColour}} onClick={() => handleReaction(post.postId, username, 2)}/>*/}
+                        {/*</IconButton>*/}
                         <IconButton aria-label="share">
                             <ShareIcon style={{color: 'green'}}/>
                         </IconButton>

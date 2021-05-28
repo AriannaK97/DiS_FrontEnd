@@ -25,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center',
         justifyContent: 'center',
         marginTop: "1%",
+        marginBottom: "2%",
         margin: 'auto',
         backgroundColor: '#343a40',
         borderRadius: 16,

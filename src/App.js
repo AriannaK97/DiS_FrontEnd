@@ -4,6 +4,7 @@ import testHome from "./components/home/home.component";
 import testProfile from "./components/login/profile.component";
 import testLogin from "./components/login/login.component";
 import testRegister from "./components/login/register.component";
+import Forum from "./components/forum/forum.component"
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import {React, Component} from 'react';
 import {Navbar, Nav, Col, Form} from "react-bootstrap";
@@ -104,6 +105,7 @@ class App extends Component {
                         <Route path="/testRegister" component={testRegister} />
                         <Route path="/testProfile" component={testProfile} />
                         <Route path="/feed" component={NewsFeed} />
+                        <Route path="/forum" component={Forum} />
                     </Switch>
                 </div>
             </Router>

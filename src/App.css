@@ -15,7 +15,8 @@
 }
 
 body {
-  background: #def3f5 !important;
+  background: #d6c8dc !important;
+  /*background: #def3f5 !important;*/
   /*min-height: 100vh;*/
   /*display: flex;*/
   font-weight: 400;
@@ -24,7 +25,8 @@ body {
 
 .logo{
   font-weight: bolder;
-  color: cornflowerblue!important;
+  /*color: cornflowerblue!important;*/
+  color: #a464ed !important;
 }
 
 .searchBar {
