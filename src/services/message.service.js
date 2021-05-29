@@ -1,8 +1,7 @@
 import axios from 'axios';
 import authHeader from './auth-header';
-import AuthService from "./auth.service";
 
-const API_URL = 'http://localhost:8080/api/auth/';
+const API_URL = 'http://localhost:8080/chat';
 
 class MessageService{
 
@@ -14,4 +13,10 @@ class MessageService{
         return axios.get(API_URL + "/chatHistory/?user=" + user + "&friend=" + friend,  { headers: authHeader() })
     }
 
+    getConversations(){
+        return axios.get(API_URL+"/users");
+    }
+
 }
+
+export default new MessageService();

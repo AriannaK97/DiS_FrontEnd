@@ -38,6 +38,14 @@ class UserService {
     getReaction(){
         return axios.get('http://localhost:8080/feed/reaction', { headers: authHeader() })
     }
+
+    getSearch(searchParam){
+        return axios.get("http://localhost:8080/search/users?keyword="+searchParam)
+    }
+
+    deletePostReaction(postId, username){
+        return axios.delete("http://127.0.0.1:8080/feed/reaction/?postId="+postId+"&username="+username, { headers: authHeader() })
+    }
 }
 
 export default new UserService();

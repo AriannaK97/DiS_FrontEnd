@@ -4,7 +4,13 @@ import App from "../../App"
 import {render} from "@testing-library/react";
 
 export default function logOut() {
+
+    function refreshPage() {
+        window.location.reload(true);
+    }
+
     AuthService.logout();
-    return <Redirect to={"/"}><App.forceAppUpdate/></Redirect>;
+    refreshPage();
+    return <Redirect to={"/"}/>;
 
 }

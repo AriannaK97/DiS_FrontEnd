@@ -1,9 +1,10 @@
-import React from 'react';
-import ConversationList from './ConversationList.component';
-import MessageList from './messageList.component';
+import React, {useState} from 'react';
+import ConversationList from '../conversationList/ConversationList.component';
+import MessageList from '../messageList/messageList.component';
 import './Messenger.css';
 
 export default function Messenger(props) {
+    const [friend, setFriend] = useState(null);
     return (
         <div className="messenger">
             {/* <Toolbar
@@ -25,12 +26,12 @@ export default function Messenger(props) {
           ]}
         /> */}
 
-            <div className="scrollable sidebar">
-                <ConversationList />
+            <div className="scrollable sidebar" style={{backgroundColor: "#d6c8dc"}}>
+                <ConversationList data={friend} setter={setFriend}/>
             </div>
 
             <div className="scrollable content">
-                <MessageList />
+                <MessageList data={friend} setter={setFriend}/>
             </div>
         </div>
     );
