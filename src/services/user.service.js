@@ -27,7 +27,7 @@ class UserService {
     }
 
     getUserNewsFeed(){
-        return axios.get('http://localhost:8080/feed/newsfeed/'+ AuthService.getCurrentUser().user.username);
+        return axios.get('http://localhost:8080/feed/newsfeed/'+ AuthService.getCurrentUser().user.username, { headers: authHeader() });
     }
 
     postReaction(postId, username, reactionType){
@@ -36,7 +36,7 @@ class UserService {
     }
 
     getReaction(){
-        return axios.get('http://localhost:8080/feed/reaction')
+        return axios.get('http://localhost:8080/feed/reaction', { headers: authHeader() })
     }
 }
 
