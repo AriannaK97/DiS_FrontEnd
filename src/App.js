@@ -14,6 +14,10 @@ import Button from "@material-ui/core/Button";
 import AuthService from "./services/auth.service"
 import LogOut from "./components/login/logout.component"
 import Divider from "@material-ui/core/Divider";
+import SearchIcon from '@material-ui/icons/Search';
+import {InputBase} from "@material-ui/core";
+import Messenger from "./components/chat/messenger.component"
+
 
 class App extends Component {
   constructor(props) {
@@ -77,7 +81,6 @@ class App extends Component {
                     <Navbar bg="dark" variant="dark" className={"Navbar"} expand="lg">
                         <Col className="d-md-flex d-block flex-row mx-md-auto mx-0">
                             <Navbar.Brand href="/home" className={"logo"}>DiS</Navbar.Brand>
-                            <Divider orientation="vertical" style={{backgroundColor:"whitesmoke"}} flexItem />
                             <Nav className="mr-auto navbarLinks">
                                 <Nav.Link className={"navbarLinksLeft"} href="/feed">NewsFeed</Nav.Link>
                                 <Nav.Link className={"navbarLinksLeft"} href="/forum">Forum</Nav.Link>
@@ -87,10 +90,13 @@ class App extends Component {
                             <Form className="d-md-flex d-block flex-row mx-md-auto mx-8 searchBar" >
                                 <Form.Control type="text" placeholder="Search" className="searchBar" />
                             </Form>
+                            <div className={"searchIcon"}>
+                                <SearchIcon />
+                            </div>
                         </Col>
                         <Col className="d-md-flex d-block flex-row mx-md-auto mx-0">
                             <Navbar.Collapse className="justify-content-end navbarLinks" on>
-                                <Nav.Link className={"navbarLinksRight"} href="/testProfile">Messages</Nav.Link>
+                                <Nav.Link className={"navbarLinksRight"} href="/messenger">Messages</Nav.Link>
                                 <Nav.Link className={"navbarLinksRight"} href="/testProfile">Profile</Nav.Link>
                                 <Divider orientation="vertical" style={{backgroundColor:"whitesmoke"}} flexItem />
                                 <Nav.Link className={"navbarLinksRight navbar-btn"} href="/logout">Log Out</Nav.Link>
@@ -107,6 +113,7 @@ class App extends Component {
                         <Route path="/feed" component={NewsFeed} />
                         <Route path="/forum" component={Forum} />
                         <Route path="/logout" component={LogOut} />
+                        <Route path="/messenger" component={Messenger} />
                     </Switch>
                 </div>
             </Router>

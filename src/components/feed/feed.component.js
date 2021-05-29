@@ -18,6 +18,7 @@ import FormDialog from "./postForm.component";
 import SentimentSatisfiedAltIcon from '@material-ui/icons/SentimentSatisfiedAlt';
 import SentimentVeryDissatisfiedIcon from '@material-ui/icons/SentimentVeryDissatisfied';
 import {Redirect} from "react-router-dom";
+import StarOutlineIcon from '@material-ui/icons/StarOutline';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -91,37 +92,49 @@ export default function PostCard() {
         return <Redirect to={"/feed"}/>
     }
 
+    //todo: for forum posts
+
     const renderReactionIcons = (post) => {
-        if(post.currentUserReaction === 0 || post.currentUserReaction === null){
-            return(
-                <div>
-                <IconButton aria-label="add to favorites">
-                    <SentimentSatisfiedAltIcon id={post.postId} style={{color: 'gray'}} onClick={() => handleReaction(post.postId, username[0], happyReactionState)}/>
-                </IconButton>
-                <IconButton aria-label="add to favorites">
-                    <SentimentVeryDissatisfiedIcon id={post.postId} style={{color: "gray"}} onClick={() => handleReaction(post.postId, username[0], sadReactionState)}/>
-                </IconButton>
-                </div>
-            );
-        }else if(post.currentUserReaction === 1){
-            return(
-                <div>
-                    <IconButton aria-label="add to favorites">
-                        <SentimentSatisfiedAltIcon id={post.postId} style={{color: 'forestgreen'}} onClick={() => handleReaction(post.postId, username[0], nullReactionState)}/>
-                    </IconButton>
-                    <IconButton aria-label="add to favorites">
-                        <SentimentVeryDissatisfiedIcon id={post.postId} style={{color: "gray"}} onClick={() => handleReaction(post.postId, username[0], sadReactionState)}/>
-                    </IconButton>
-                </div>
-            );
-        }else if(post.currentUserReaction === 2){
-            return(
-                <div>
+        if(post.pageTitle !== null){
+            if(post.currentUserReaction === 0 || post.currentUserReaction === null){
+                return(
+                    <div>
                     <IconButton aria-label="add to favorites">
                         <SentimentSatisfiedAltIcon id={post.postId} style={{color: 'gray'}} onClick={() => handleReaction(post.postId, username[0], happyReactionState)}/>
                     </IconButton>
                     <IconButton aria-label="add to favorites">
-                        <SentimentVeryDissatisfiedIcon id={post.postId} style={{color: "indianred"}} onClick={() => handleReaction(post.postId, username[0], nullReactionState)}/>
+                        <SentimentVeryDissatisfiedIcon id={post.postId} style={{color: "gray"}} onClick={() => handleReaction(post.postId, username[0], sadReactionState)}/>
+                    </IconButton>
+                    </div>
+                );
+            }else if(post.currentUserReaction === 1){
+                return(
+                    <div>
+                        <IconButton aria-label="add to favorites">
+                            <SentimentSatisfiedAltIcon id={post.postId} style={{color: 'forestgreen'}} onClick={() => handleReaction(post.postId, username[0], nullReactionState)}/>
+                        </IconButton>
+                        <IconButton aria-label="add to favorites">
+                            <SentimentVeryDissatisfiedIcon id={post.postId} style={{color: "gray"}} onClick={() => handleReaction(post.postId, username[0], sadReactionState)}/>
+                        </IconButton>
+                    </div>
+                );
+            }else if(post.currentUserReaction === 2){
+                return(
+                    <div>
+                        <IconButton aria-label="add to favorites">
+                            <SentimentSatisfiedAltIcon id={post.postId} style={{color: 'gray'}} onClick={() => handleReaction(post.postId, username[0], happyReactionState)}/>
+                        </IconButton>
+                        <IconButton aria-label="add to favorites">
+                            <SentimentVeryDissatisfiedIcon id={post.postId} style={{color: "indianred"}} onClick={() => handleReaction(post.postId, username[0], nullReactionState)}/>
+                        </IconButton>
+                    </div>
+                );
+            }
+        }else{
+            return(
+                <div>
+                    <IconButton aria-label="page rating">
+                        <StarOutlineIcon id={post.postId} style={{color: 'gray'}} />
                     </IconButton>
                 </div>
             );
