@@ -44,7 +44,7 @@ class UserService {
     }
 
     deletePostReaction(postId, username){
-        return axios.delete("http://127.0.0.1:8080/feed/reaction/?postId="+postId+"&username="+username, { headers: authHeader() })
+        return axios.delete("http://localhost:8080/feed/reaction/?postId="+postId+"&username="+username, { headers: authHeader() })
     }
 }
 

@@ -61,6 +61,8 @@
     ]
   },
   "devDependencies": {
+    "@iconify-icons/ion": "^1.1.2",
+    "@iconify/react": "^1.1.4",
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.58",
     "css-loader": "^5.2.4",
