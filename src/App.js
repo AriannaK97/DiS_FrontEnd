@@ -8,7 +8,7 @@ import Forum from "./components/forum/forum.component"
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import {React, Component} from 'react';
 import {Navbar, Nav, Col, Form} from "react-bootstrap";
-import {BrowserRouter as Router, Switch, Route, Redirect} from "react-router-dom";
+import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import Home from "./components/home/home.component";
 import AuthService from "./services/auth.service"
 import LogOut from "./components/login/logout.component"

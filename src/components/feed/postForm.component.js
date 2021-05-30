@@ -8,14 +8,12 @@ import {
     DialogTitle, FormControl, FormHelperText, Input, InputLabel, Paper,
     TextField
 } from "@material-ui/core";
-import {red} from "@material-ui/core/colors";
 import Alert from '@material-ui/lab/Alert';
 import {Col, Row} from "react-bootstrap";
 import {makeStyles} from "@material-ui/core/styles";
 import UserService from "../../services/user.service"
 import AuthService from "../../services/auth.service";
 import Avatar from "@material-ui/core/Avatar";
-import {Redirect} from "react-router-dom";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -72,7 +70,7 @@ export default function FormDialog() {
         alertBanner = <Alert severity="success">Succesfully posted!</Alert>;
         setTimeout(function(){
             setPosted(false);
-        }.bind(this),3000);
+        },3000);
     }
 
     function refreshPage() {
@@ -98,13 +96,15 @@ export default function FormDialog() {
         setOpen(false);
     };
 
+
+
     return (
         <div >{alertBanner}
         <Paper className={classes.alignItemsAndJustifyContent} square={false}>
         <FormControl className={classes.DummyFrontForm} variant={"outlined"} onClick={handleClickOpen} color={"secondary"} square={false} >
             <Row>
                 <Col sm={2}>
-                <Avatar aria-label="post" className={classes.avatar} style={{backgroundColor: user.user.color}}/>
+                <Avatar aria-label="post" className={classes.avatar} style={{backgroundColor: avatarColor}}/>
                 </Col>
                 <Col sm={10}>
                     <InputLabel className={classes.DummyInputLabel} htmlFor="my-input">Create Post</InputLabel>
