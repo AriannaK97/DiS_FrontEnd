@@ -9,8 +9,13 @@ class UserService {
         return axios.get(API_URL + 'all');
     }
 
-    redirectToLogin() {
-        window.location.href = '/testLogin';
+    errorHandling(error) {
+        if (error.response.status == '403') {
+            window.location.href = '/testLogin';
+        }
+        else {
+            console.log(error);
+        }
     }
 
 
@@ -32,14 +37,9 @@ class UserService {
 
     getUserNewsFeed(){
         return axios.get('http://localhost:8080/feed/newsfeed/'+ AuthService.getCurrentUser().user.username,
-            { headers: authHeader() }).catch(function (error) {
-            if (error.response.status == '403') {
-                window.location.href = '/testLogin';
-            }
-            else {
-                console.log(error);
-            }
-        });
+            { headers: authHeader() }).catch(err => {this.errorHandling(err);})
+
+
     }
 
     postReaction(postId, username, reactionType){
@@ -48,7 +48,15 @@ class UserService {
     }
 
     getReaction(){
-        return axios.get('http://localhost:8080/feed/reaction')
+        return axios.get('http://localhost:8080/feed/reaction', { headers: authHeader() })
+    }
+
+    getSearch(searchParam){
+        return axios.get("http://localhost:8080/search/users?keyword="+searchParam)
+    }
+
+    deletePostReaction(postId, username){
+        return axios.delete("http://localhost:8080/feed/reaction/?postId="+postId+"&username="+username, { headers: authHeader() })
     }
 }
 

@@ -9,6 +9,7 @@
 }
 
 .Navbar {
+  position: sticky;
   margin: fill;
   border: #282c34;
   height: 80px;
@@ -26,14 +27,16 @@ body {
 .logo{
   font-weight: bolder;
   /*color: cornflowerblue!important;*/
-  color: #a464ed !important;
+  color: #8f29f3 !important;
 }
 
 .searchBar {
   background: whitesmoke;
   border-radius: 50px 50px 50px 50px !important;
+  padding-left: 6%;
   margin:auto !important;
   width: 100% !important;
+  border-color: transparent !important;
 }
 
 .Container{
@@ -63,6 +66,7 @@ body {
 }
 
 .App-header {
+  position: fixed;
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
@@ -94,3 +98,18 @@ body {
     transform: rotate(360deg);
   }
 }
+
+.searchIcon {
+  /*padding: theme.spacing(0, 2);*/
+  padding-left: 1%;
+  height: 100%;
+  position: absolute;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+}
+
+
+

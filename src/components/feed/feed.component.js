@@ -8,7 +8,6 @@ import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import {red} from '@material-ui/core/colors';
-import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import UserService from "../../services/user.service";
@@ -18,6 +17,7 @@ import FormDialog from "./postForm.component";
 import SentimentSatisfiedAltIcon from '@material-ui/icons/SentimentSatisfiedAlt';
 import SentimentVeryDissatisfiedIcon from '@material-ui/icons/SentimentVeryDissatisfied';
 import {Redirect} from "react-router-dom";
+import StarOutlineIcon from '@material-ui/icons/StarOutline';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -70,9 +70,9 @@ const useStyles = makeStyles((theme) => ({
 export default function PostCard() {
     const classes = useStyles();
     const [posts, setPosts] = useState([ ]);
-    const [nullReactionState, setNullReactionState] = useState(0);
-    const [happyReactionState, setHappyReactionColor] =  useState(1);
-    const [sadReactionState, setSadReactionState] = useState(2);
+    const nullReactionState = useState(0);
+    const happyReactionState =  useState(1);
+    const sadReactionState = useState(2);
     const user = AuthService.getCurrentUser();
     const username = useState(user.user.username);
 
@@ -80,48 +80,67 @@ export default function PostCard() {
     useEffect(() => {
             UserService.getUserNewsFeed().then(response => {
                 setPosts(response.data);
-                console.log(posts);
+                console.log(response.data);
             })
         },
         [],
     );
 
     const handleReaction = (id, username, reactionType) => {
-        UserService.postReaction(id, username, reactionType).then(response => response.status);
-        return <Redirect to={"/feed"}/>
+        console.log("test " + reactionType);
+        if(reactionType === 0){
+            UserService.deletePostReaction(id, username).then(response => response.status);
+            return <Redirect to={"/feed"}/>
+        }else{
+            console.log("post reaction");
+            UserService.postReaction(id, username, reactionType).then(response => response.status);
+            return <Redirect to={"/feed"}/>
+        }
     }
 
+    //todo: for forum posts
+
     const renderReactionIcons = (post) => {
-        if(post.currentUserReaction === 0 || post.currentUserReaction === null){
-            return(
-                <div>
-                <IconButton aria-label="add to favorites">
-                    <SentimentSatisfiedAltIcon id={post.postId} style={{color: 'gray'}} onClick={() => handleReaction(post.postId, username[0], happyReactionState)}/>
-                </IconButton>
-                <IconButton aria-label="add to favorites">
-                    <SentimentVeryDissatisfiedIcon id={post.postId} style={{color: "gray"}} onClick={() => handleReaction(post.postId, username[0], sadReactionState)}/>
-                </IconButton>
-                </div>
-            );
-        }else if(post.currentUserReaction === 1){
-            return(
-                <div>
+        if(post.pageTitle === null){
+            if(post.currentUserReaction === 0 || post.currentUserReaction === null){
+                return(
+                    <div>
                     <IconButton aria-label="add to favorites">
-                        <SentimentSatisfiedAltIcon id={post.postId} style={{color: 'forestgreen'}} onClick={() => handleReaction(post.postId, username[0], nullReactionState)}/>
+                        <SentimentSatisfiedAltIcon id={post.postId} style={{color: 'gray'}} onClick={() => handleReaction(post.postId, username[0], happyReactionState[0])}/>
                     </IconButton>
                     <IconButton aria-label="add to favorites">
-                        <SentimentVeryDissatisfiedIcon id={post.postId} style={{color: "gray"}} onClick={() => handleReaction(post.postId, username[0], sadReactionState)}/>
+                        <SentimentVeryDissatisfiedIcon id={post.postId} style={{color: "gray"}} onClick={() => handleReaction(post.postId, username[0], sadReactionState[0])}/>
                     </IconButton>
-                </div>
-            );
-        }else if(post.currentUserReaction === 2){
+                    </div>
+                );
+            }else if(post.currentUserReaction === 1){
+                return(
+                    <div>
+                        <IconButton aria-label="add to favorites">
+                            <SentimentSatisfiedAltIcon id={post.postId} style={{color: 'forestgreen'}} onClick={() => handleReaction(post.postId, username[0], nullReactionState[0])}/>
+                        </IconButton>
+                        <IconButton aria-label="add to favorites">
+                            <SentimentVeryDissatisfiedIcon id={post.postId} style={{color: "gray"}} onClick={() => handleReaction(post.postId, username[0], sadReactionState[0])}/>
+                        </IconButton>
+                    </div>
+                );
+            }else if(post.currentUserReaction === 2){
+                return(
+                    <div>
+                        <IconButton aria-label="add to favorites">
+                            <SentimentSatisfiedAltIcon id={post.postId} style={{color: 'gray'}} onClick={() => handleReaction(post.postId, username[0], happyReactionState[0])}/>
+                        </IconButton>
+                        <IconButton aria-label="add to favorites">
+                            <SentimentVeryDissatisfiedIcon id={post.postId} style={{color: "indianred"}} onClick={() => handleReaction(post.postId, username[0], nullReactionState[0])}/>
+                        </IconButton>
+                    </div>
+                );
+            }
+        }else{
             return(
                 <div>
-                    <IconButton aria-label="add to favorites">
-                        <SentimentSatisfiedAltIcon id={post.postId} style={{color: 'gray'}} onClick={() => handleReaction(post.postId, username[0], happyReactionState)}/>
-                    </IconButton>
-                    <IconButton aria-label="add to favorites">
-                        <SentimentVeryDissatisfiedIcon id={post.postId} style={{color: "indianred"}} onClick={() => handleReaction(post.postId, username[0], nullReactionState)}/>
+                    <IconButton aria-label="page rating">
+                        <StarOutlineIcon id={post.postId} style={{color: 'gray'}} />
                     </IconButton>
                 </div>
             );
@@ -136,7 +155,7 @@ export default function PostCard() {
                     <CardHeader classes={{title: classes.CardHeader,subheader: classes.CardHeader}}
                         style={{ color:'whitesmoke'}}
                         avatar={
-                            <Avatar alt={post.username} aria-label="post" className={classes.avatar}/>
+                            <Avatar alt={post.username} aria-label="post" className={classes.avatar} style={{backgroundColor: post.color}}/>
                         }
                         action={
                             <IconButton aria-label="settings">
@@ -153,12 +172,6 @@ export default function PostCard() {
                     </CardContent>
                     <CardActions disableSpacing>
                         {renderReactionIcons(post)}
-                        {/*<IconButton aria-label="add to favorites">*/}
-                        {/*    <SentimentSatisfiedAltIcon id={post.postId} style={{color: reactionColour}} onClick={() => handleReaction(post.postId, username, 1)}/>*/}
-                        {/*</IconButton>*/}
-                        {/*<IconButton aria-label="add to favorites">*/}
-                        {/*    <SentimentVeryDissatisfiedIcon id={post.postId} style={{color: reactionColour}} onClick={() => handleReaction(post.postId, username, 2)}/>*/}
-                        {/*</IconButton>*/}
                         <IconButton aria-label="share">
                             <ShareIcon style={{color: 'green'}}/>
                         </IconButton>

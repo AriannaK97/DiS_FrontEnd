@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
         marginTop: '8%',
         marginBottom: '-30%',
         marginLeft: '5%',
-        backgroundColor: red[500],
+        // backgroundColor: red[500],
     }
 }));
 
@@ -64,6 +64,8 @@ export default function FormDialog() {
     const [posted, setPosted] = useState(false);
     const user = AuthService.getCurrentUser()
     const username = user.user.username
+    const avatarColor = user.user.color;
+    console.log(user);
 
     let alertBanner = null
     if(posted === true) {
@@ -73,13 +75,18 @@ export default function FormDialog() {
         }.bind(this),3000);
     }
 
+    function refreshPage() {
+        window.location.reload(true);
+    }
+
     const handleSubmit = (evt) => {
         evt.preventDefault();
         UserService.postUserFeedPost(content, username).then(response => response.status);
         setPosted(true);
         setOpen(false);
         setContent(null);
-        return <Redirect to={"/feed"}/>
+        refreshPage();
+        // return <Redirect to={"/feed"}/>
     }
 
     const handleClickOpen = () => {
@@ -97,7 +104,7 @@ export default function FormDialog() {
         <FormControl className={classes.DummyFrontForm} variant={"outlined"} onClick={handleClickOpen} color={"secondary"} square={false} >
             <Row>
                 <Col sm={2}>
-                <Avatar aria-label="post" className={classes.avatar}>R</Avatar>
+                <Avatar aria-label="post" className={classes.avatar} style={{backgroundColor: user.user.color}}/>
                 </Col>
                 <Col sm={10}>
                     <InputLabel className={classes.DummyInputLabel} htmlFor="my-input">Create Post</InputLabel>
