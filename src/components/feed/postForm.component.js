@@ -96,8 +96,6 @@ export default function FormDialog() {
         setOpen(false);
     };
 
-
-
     return (
         <div >{alertBanner}
         <Paper className={classes.alignItemsAndJustifyContent} square={false}>

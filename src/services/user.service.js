@@ -10,14 +10,13 @@ class UserService {
     }
 
     errorHandling(error) {
-        if (error.response.status == '403') {
+        if (error.response.status === '403') {
             window.location.href = '/testLogin';
         }
         else {
             console.log(error);
         }
     }
-
 
     getAllUsers() {
         return axios.get(API_URL + 'users', { headers: authHeader() });
@@ -35,6 +34,7 @@ class UserService {
         return axios.post('http://localhost:8080/feed/post', {content ,username});
     }
 
+    //todo: fix error handling for the rest
     getUserNewsFeed(){
         return axios.get('http://localhost:8080/feed/newsfeed/'+ AuthService.getCurrentUser().user.username,
             { headers: authHeader() }).catch(err => {this.errorHandling(err);})

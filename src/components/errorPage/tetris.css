@@ -1,0 +1,35 @@
+.game-block {
+    margin: 0;
+    padding: 0;
+    width: 1.5em;
+    height: 1.5em;
+    border: 1px solid #ddd;
+}
+.piece-i {
+    background-color: #6e419a;
+}
+.piece-j {
+    background-color: #bc88f8;
+}
+.piece-l {
+    background-color: #6024e8;
+}
+.piece-o {
+    background-color: #1a092b;
+}
+.piece-s {
+    background-color: #5905ac;
+}
+.piece-t {
+    background-color: #433d49;
+}
+.piece-z {
+    background-color: #ccb0e7;
+}
+.piece-preview {
+    background-color: antiquewhite;
+}
+
+table {
+    margin: auto;
+}

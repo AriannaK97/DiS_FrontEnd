@@ -1,7 +1,7 @@
 import './App.css';
 import NewsFeed from './components/feed/feed.component'
 import testHome from "./components/home/home.component";
-import testProfile from "./components/login/profile.component";
+import testProfile from "./components/profile/profile.component";
 import testLogin from "./components/login/login.component";
 import testRegister from "./components/login/register.component";
 import Forum from "./components/forum/forum.component"
@@ -17,6 +17,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import Messenger from "./components/chat/messenger/messenger.component"
 import UserService from "./services/user.service"
 import {Container} from "@material-ui/core";
+import Tetris from "./components/errorPage/tetris"
 
 
 class App extends Component {
@@ -71,7 +72,7 @@ class App extends Component {
             return (
                 <Router>
                     <div className="App">
-                        <Navbar bg="dark" variant="dark" className={"Navbar"} expand="lg">
+                        <Navbar bg="dark" variant="dark" className={"Navbar fixed-top"} expand="lg">
                             <Col className="d-md-flex d-block flex-row mx-md-auto mx-0">
                                 <Navbar.Brand href="/home" className={"logo"}>DiS</Navbar.Brand>
                                 <Nav className="mr-auto navbarLinks"/>
@@ -91,6 +92,7 @@ class App extends Component {
                             <Route path="/testRegister" component={testRegister} />
                             <Route path="/testProfile" component={testProfile} />
                             <Route path="/feed" component={NewsFeed} />
+                            <Route path="/errorPage" component={Tetris} />
                         </Switch>
                     </div>
                 </Router>
@@ -99,7 +101,7 @@ class App extends Component {
             return (
                 <Router>
                     <div className="App">
-                        <Navbar bg="dark" variant="dark" className={"Navbar"} expand="lg">
+                        <Navbar bg="dark" variant="dark" className={"Navbar fixed-top"} expand="lg">
                             <Col className="d-md-flex d-block flex-row mx-md-auto mx-0">
                                 <Navbar.Brand href="/home" className={"logo"}>DiS</Navbar.Brand>
                                 <Nav className="mr-auto navbarLinks">
@@ -135,6 +137,7 @@ class App extends Component {
                             <Route path="/forum" component={Forum} />
                             <Route path="/logout" component={LogOut} />
                             <Route path="/messenger" component={Messenger} />
+                            <Route path="/errorPage" component={Tetris} />
                         </Switch>
                     </div>
                 </Router>
