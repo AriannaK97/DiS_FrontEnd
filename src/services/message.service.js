@@ -14,7 +14,7 @@ class MessageService{
     }
 
     getConversations(){
-        return axios.get(API_URL+"/users");
+        return axios.get(API_URL+"/users", { headers: authHeader() });
     }
 
 }

@@ -14,8 +14,17 @@ export default function MessageList(props) {
     const user = AuthService.getCurrentUser();
     const [username] = useState(user.user.username)
     const friend = props.data;
-    const setFriend = props.setter;
+    // const setFriend = props.setter;
     console.log(props.data, username);
+
+
+    // useEffect(() => {
+    //     const interval = setInterval(() => {
+    //         setMessages([]);
+    //         getMessages(username, friend);
+    //     }, 1000);
+    //     return () => clearInterval(interval);
+    // }, [friend]);
 
     useEffect(() => {
         getMessages(username, friend);

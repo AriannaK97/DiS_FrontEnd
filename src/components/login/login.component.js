@@ -7,13 +7,10 @@ import AuthService from "../../services/auth.service";
 import Avatar from "@material-ui/core/Avatar";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import "./login.component.css"
-import * as theme from "@material-ui/system";
 import Grid from "@material-ui/core/Grid";
 import Link from "@material-ui/core/Link";
 import Box from "@material-ui/core/Box";
-//import {Copyright} from "@material-ui/icons";
 import Typography from "@material-ui/core/Typography";
-import {green} from "@material-ui/core/colors";
 
 const required = value => {
     if (!value) {

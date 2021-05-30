@@ -25,7 +25,8 @@ export default function ConversationList(props) {
 
     useEffect(() => {
         getConversations()
-    },[])
+    },[]
+        )
 
     const getConversations = () => {
         MessageService.getConversations().then(response => {

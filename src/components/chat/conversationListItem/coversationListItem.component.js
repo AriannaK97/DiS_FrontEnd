@@ -1,5 +1,4 @@
 import React, {useEffect} from 'react';
-import Messenger from "../messenger/messenger.component"
 import shave from 'shave';
 import AuthService from "../../../services/auth.service";
 
@@ -13,22 +12,13 @@ export default function ConversationListItem(props) {
 
     const name = props.data.name;
     const text = props.data.text;
-    const friend = props.friend;
     const setFriend = props.setter;
     const currentUser = AuthService.getCurrentUser();
-    const username = currentUser.user.username;
     console.log(currentUser.user.username, name);
 
     const getMessageList = (friend) => {
         console.log(friend)
         setFriend(friend);
-        // return(
-        //     <div className="scrollable content">
-        //         <Messenger
-        //             data={friend}
-        //         />
-        //     </div>
-        // )
     }
 
     return (

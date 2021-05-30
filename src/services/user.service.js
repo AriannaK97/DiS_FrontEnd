@@ -52,7 +52,7 @@ class UserService {
     }
 
     getSearch(searchParam){
-        return axios.get("http://localhost:8080/search/users?keyword="+searchParam)
+        return axios.get("http://localhost:8080/search/users?keyword="+searchParam, { headers: authHeader() })
     }
 
     deletePostReaction(postId, username){

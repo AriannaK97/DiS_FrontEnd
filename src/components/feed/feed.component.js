@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
         transform: 'rotate(180deg)',
     },
     avatar: {
-        backgroundColor: red[500],
+        // backgroundColor: red[500],
     },
     alignItemsAndJustifyContent: {
         width: 500,
@@ -67,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function PostCard() {
+export default function FeedCard() {
     const classes = useStyles();
     const [posts, setPosts] = useState([ ]);
     const nullReactionState = useState(0);
@@ -75,7 +75,9 @@ export default function PostCard() {
     const sadReactionState = useState(2);
     const user = AuthService.getCurrentUser();
     const username = useState(user.user.username);
+    const avatarColor = user.user.color;
 
+    console.log(user.user);
 
     useEffect(() => {
             UserService.getUserNewsFeed().then(response => {
@@ -155,7 +157,7 @@ export default function PostCard() {
                     <CardHeader classes={{title: classes.CardHeader,subheader: classes.CardHeader}}
                         style={{ color:'whitesmoke'}}
                         avatar={
-                            <Avatar alt={post.username} aria-label="post" className={classes.avatar} style={{backgroundColor: post.color}}/>
+                            <Avatar alt={post.username} aria-label="post" className={classes.avatar} style={{backgroundColor: avatarColor}}/>
                         }
                         action={
                             <IconButton aria-label="settings">
