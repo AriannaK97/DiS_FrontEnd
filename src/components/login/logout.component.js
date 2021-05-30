@@ -5,6 +5,6 @@ import {render} from "@testing-library/react";
 
 export default function logOut() {
     AuthService.logout();
-    return <Redirect to={"/"}><App.forceAppUpdate/></Redirect>;
+    window.location.href = '/testLogin';
 
 }

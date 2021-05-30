@@ -9,6 +9,10 @@ class UserService {
         return axios.get(API_URL + 'all');
     }
 
+    redirectToLogin() {
+        window.location.href = '/testLogin';
+    }
+
 
     getAllUsers() {
         return axios.get(API_URL + 'users', { headers: authHeader() });
@@ -27,7 +31,15 @@ class UserService {
     }
 
     getUserNewsFeed(){
-        return axios.get('http://localhost:8080/feed/newsfeed/'+ AuthService.getCurrentUser().user.username);
+        return axios.get('http://localhost:8080/feed/newsfeed/'+ AuthService.getCurrentUser().user.username,
+            { headers: authHeader() }).catch(function (error) {
+            if (error.response.status == '403') {
+                window.location.href = '/testLogin';
+            }
+            else {
+                console.log(error);
+            }
+        });
     }
 
     postReaction(postId, username, reactionType){
