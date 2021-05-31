@@ -7,7 +7,6 @@ import CardActions from '@material-ui/core/CardActions';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import {red} from '@material-ui/core/colors';
 import ShareIcon from '@material-ui/icons/Share';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import UserService from "../../services/user.service";
@@ -16,7 +15,6 @@ import Grid from "@material-ui/core/Grid";
 import FormDialog from "./postForm.component";
 import SentimentSatisfiedAltIcon from '@material-ui/icons/SentimentSatisfiedAlt';
 import SentimentVeryDissatisfiedIcon from '@material-ui/icons/SentimentVeryDissatisfied';
-import {Redirect} from "react-router-dom";
 import StarOutlineIcon from '@material-ui/icons/StarOutline';
 
 const useStyles = makeStyles((theme) => ({
@@ -91,11 +89,11 @@ export default function FeedCard() {
         console.log("test " + reactionType);
         if(reactionType === 0){
             UserService.deletePostReaction(id, username).then(response => response.status);
-            return <Redirect to={"/feed"}/>
+            window.location.href = '/feed';
         }else{
             console.log("post reaction");
             UserService.postReaction(id, username, reactionType).then(response => response.status);
-            return <Redirect to={"/feed"}/>
+            window.location.href = '/feed';
         }
     }
 
@@ -159,22 +157,22 @@ export default function FeedCard() {
                             <Avatar alt={post.username} aria-label="post" className={classes.avatar} style={{backgroundColor: post.userColor}}/>
                         }
                         action={
-                            <IconButton aria-label="settings">
+                            <IconButton aria-label="settings" style={{color: 'gray'}}>
                                 <MoreVertIcon />
                             </IconButton>
                         }
-                        title={post.username}
-                        subheader={post.postTime}
+                        title={<strong style={{fontSize: 20}}>{post.username}</strong>}
+                        subheader={<small>{post.postTime}</small>}
                     />
                     <CardContent>
-                        <Typography variant="body2" color="textSecondary" component="p" style={{ color:'whitesmoke'}}>
+                        <Typography variant="body2" color="textSecondary" component="p" style={{ color:'whitesmoke', fontSize: 15}}>
                             {post.content}
                         </Typography>
                     </CardContent>
                     <CardActions disableSpacing>
                         {renderReactionIcons(post)}
                         <IconButton aria-label="share">
-                            <ShareIcon style={{color: 'green'}}/>
+                            <ShareIcon style={{color: 'gray'}}/>
                         </IconButton>
                     </CardActions>
                 </Card>

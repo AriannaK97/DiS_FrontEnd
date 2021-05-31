@@ -82,6 +82,7 @@ class App extends Component {
                                 <Navbar.Collapse className="justify-content-end navbarLinks" on>
                                     <Nav.Link className={"navbarLinksRight"} href="/testRegister">Register</Nav.Link>
                                     <Nav.Link className={"navbarLinksRight"} href="/testLogin">Login</Nav.Link>
+                                    <Nav.Link className={"navbarLinksRight"} href="/errorPage">errorPage</Nav.Link>
                                 </Navbar.Collapse>
                             </Col>
                         </Navbar>
@@ -98,6 +99,8 @@ class App extends Component {
                 </Router>
             );
         }else{
+            const currentUser = AuthService.getCurrentUser();
+            const username = currentUser.user.username;
             return (
                 <Router>
                     <div className="App">
@@ -120,7 +123,7 @@ class App extends Component {
                             <Col className="d-md-flex d-block flex-row mx-md-auto mx-0">
                                 <Navbar.Collapse className="justify-content-end navbarLinks" on>
                                     <Nav.Link className={"navbarLinksRight"} href="/messenger">Messages</Nav.Link>
-                                    <Nav.Link className={"navbarLinksRight"} href="/testProfile">Profile</Nav.Link>
+                                    <Nav.Link className={"navbarLinksRight"} href="/testProfile">{username}</Nav.Link>
                                     <Divider orientation="vertical" style={{backgroundColor:"whitesmoke"}} flexItem />
                                     <Nav.Link className={"navbarLinksRight navbar-btn"} href="/logout">Log Out</Nav.Link>
                                 </Navbar.Collapse>

@@ -9,9 +9,10 @@ function TetrisGame () {
             // Render it however you'd like
             return (
                 <div>
-                    <div>
-                        <p>Points: {points}</p>
-                        <p>Lines Cleared: {linesCleared}</p>
+                    <div style={{color: "#1a092b", marginTop: "150px"}}>
+                        <p><strong>Oops! Something went wrong...</strong></p>
+                        <p><strong>Points: {points}</strong></p>
+                        <p><strong>Lines Cleared: {linesCleared}</strong></p>
                     </div>
                     <Gameboard/>
                 </div>

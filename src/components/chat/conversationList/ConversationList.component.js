@@ -4,16 +4,16 @@ import ConversationListItem from '../conversationListItem/coversationListItem.co
 import MessageService from "../../../services/message.service"
 import iosCog from '@iconify-icons/ion/ios-cog';
 import iosAddCircleOutline from '@iconify-icons/ion/ios-add-circle-outline';
-
+import ToolbarButton from "../toolbarButton/toolbarButton.component"
 import './ConversationList.css';
 import Toolbar from "@material-ui/core/Toolbar";
 import * as PropTypes from "prop-types";
 
-class ToolbarButton extends React.Component {
-    render() {
-        return null;
-    }
-}
+// class ToolbarButton extends React.Component {
+//     render() {
+//         return null;
+//     }
+// }
 
 ToolbarButton.propTypes = {icon: PropTypes.string};
 export default function ConversationList(props) {
@@ -21,12 +21,10 @@ export default function ConversationList(props) {
     const friend = props.data;
     const setFriend = props.setter;
     const conversationListName = "Conversations"
-    console.log(props.data)
 
     useEffect(() => {
         getConversations()
-    },[]
-        )
+    },[])
 
     const getConversations = () => {
         MessageService.getConversations().then(response => {
@@ -34,6 +32,7 @@ export default function ConversationList(props) {
             let newConversations = response.data.map(result => {
                 return {
                     name: `${result.username}`,
+                    color: `${result.color}`,
                     text: 'Hello world! This is a long message that needs to be truncated.'
                 };
             });
@@ -60,6 +59,7 @@ export default function ConversationList(props) {
                         data={conversation}
                         friend={friend}
                         setter={setFriend}
+                        color={conversation.color}
                     />
                 )
             }

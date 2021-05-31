@@ -21,7 +21,7 @@
 }
 
 .sidebar {
-  height: 91.5vh;
+  height: 85.2vh;
   background: white;
   grid-row-start: 1;
   grid-row-end: span 3;
@@ -36,4 +36,9 @@
 .footer {
   grid-column-start: 2;
   background: white;
+}
+
+.bottomChatList {
+  width:40vh;
+  border-color: whitesmoke;
 }

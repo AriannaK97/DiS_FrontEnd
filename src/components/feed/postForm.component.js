@@ -73,18 +73,13 @@ export default function FormDialog() {
         },3000);
     }
 
-    function refreshPage() {
-        window.location.reload(true);
-    }
-
     const handleSubmit = (evt) => {
         evt.preventDefault();
         UserService.postUserFeedPost(content, username).then(response => response.status);
         setPosted(true);
         setOpen(false);
         setContent(null);
-        refreshPage();
-        // return <Redirect to={"/feed"}/>
+        window.location.href = '/feed';
     }
 
     const handleClickOpen = () => {

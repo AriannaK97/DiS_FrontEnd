@@ -5,6 +5,11 @@
     height: 1.5em;
     border: 1px solid #ddd;
 }
+
+.game-board {
+    background-color: whitesmoke;
+}
+
 .piece-i {
     background-color: #6e419a;
 }
@@ -27,9 +32,9 @@
     background-color: #ccb0e7;
 }
 .piece-preview {
-    background-color: antiquewhite;
+    background-color: #d882f3;
 }
 
 table {
-    margin: auto;
+    margin: 40px auto auto auto;
 }

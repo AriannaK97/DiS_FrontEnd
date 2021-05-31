@@ -76,11 +76,10 @@ export default function Profile() {
     const happyReactionState =  useState(1);
     const sadReactionState = useState(2);
 
+
     useEffect(() => {
-            UserService.getUserNewsFeed().then(response => {
-                setPosts(response.data);
-                console.log(response.data);
-            })
+            setPosts(currentUser.user.userFeedPosts);
+            console.log(currentUser);
         },
         [],
     );

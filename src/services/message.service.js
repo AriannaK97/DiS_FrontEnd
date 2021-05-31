@@ -6,7 +6,7 @@ const API_URL = 'http://localhost:8080/chat';
 class MessageService{
 
     postMessage(message, sender, recipient){
-        return axios.post(API_URL+"/send", {message, sender, recipient});
+        return axios.post(API_URL+"/send", {message, sender, recipient}, { headers: authHeader() });
     }
 
     getMessage(user, friend){

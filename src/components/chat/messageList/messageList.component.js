@@ -14,8 +14,9 @@ export default function MessageList(props) {
     const user = AuthService.getCurrentUser();
     const [username] = useState(user.user.username)
     const friend = props.data;
+    const setFriend = props.setter;
+    let lastMessageTimestamp;
     // const setFriend = props.setter;
-    console.log(props.data, username);
 
 
     // useEffect(() => {
@@ -28,15 +29,13 @@ export default function MessageList(props) {
 
     useEffect(() => {
         getMessages(username, friend);
-    },[friend])
+    },[friend]);
 
 
     const getMessages = (username, currentFriend) => {
         console.log(username, currentFriend)
         MessageService.getMessage(username, currentFriend).then(tempMessages => {
             setMessages([...messages, ...tempMessages.data])
-            console.log(messages);
-            console.log(tempMessages);
         })
     }
 
@@ -79,6 +78,11 @@ export default function MessageList(props) {
                 if (nextBySameAuthor && nextDuration.as('hours') < 1) {
                     endsSequence = false;
                 }
+            }
+
+            if(i === messageCount-1) {
+                lastMessageTimestamp = current.timestamp;
+                console.log(lastMessageTimestamp);
             }
 
             tempMessages.push(

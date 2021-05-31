@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -11,8 +11,19 @@ import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
+import {Accordion, AccordionDetails, AccordionSummary} from "@material-ui/core";
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ForumService from "../../services/forum.service"
+import PageForm from "./pageForm"
+import ClassIcon from '@material-ui/icons/Class';
+import PageThreadsList from "./pageThreadList"
+import ThreadPostList from "./threadPostList"
+import ThreadPostForm from "./threadPostForm"
+import UserService from "../../services/user.service";
+import AuthService from "../../services/auth.service"
+import PageRating from "./pageRating"
+
+
 
 const drawerWidth = 240;
 
@@ -30,6 +41,7 @@ const useStyles = makeStyles((theme) => ({
         flexShrink: 0,
     },
     drawerPaper: {
+        height: "100vh",
         backgroundColor: "whitesmoke",
         marginTop: '4%',
         width: drawerWidth,
@@ -37,18 +49,71 @@ const useStyles = makeStyles((theme) => ({
     // necessary for content to be below app bar
     toolbar: theme.mixins.toolbar,
     content: {
+        margin: "5% auto auto auto",
         flexGrow: 1,
-        backgroundColor: theme.palette.background.default,
+        backgroundColor: "whitesmoke",
         padding: theme.spacing(3),
     },
 }));
 
+
 export default function PermanentDrawerLeft() {
     const classes = useStyles();
+    const [pages, setPages] = useState([ ]);
+    const [selectedPage, setSelectedPage] = useState(null);
+    const [selectedPageTitle, setSelectedPageTitle] = useState('');
+    const [showRating, setShowRating] = useState(false)
+    const [showThreadSectionPost, setShowThreadSectionPost] = useState(false);
+    const [showThreadSection, setShowThreadSection] = useState(false);
+    const [selectedThreadPath, setSelectedThreadPath] = useState('');
+    const [selectedThreadId, setSelectedThreadId] = useState('');
+    const [selectedThreadName, setSelectedThreadName] = useState('');
+    const [currentRating, setCurrentRating] = useState(0);
+    const currentUser = AuthService.getCurrentUser();
+    const username = currentUser.user.username;
 
     useEffect(() => {
+        ForumService.getPages().then(response => {
+            setPages(response.data);
+            console.log(response.data);
+        })
+    },[])
 
-    })
+    const selectPage = (pageId, title, page) => {
+        setSelectedPage(pageId);
+        setSelectedPageTitle(title);
+        setSelectedThreadName('');
+        setShowThreadSection(true);
+        setShowRating(true);
+    }
+
+    let pagesList = null;
+    if(pages){
+        pagesList = pages.map(page => (
+            <ListItem button key={page.title} onClick={()=>selectPage(page.id, page.title)}>
+                <ListItemIcon><ClassIcon /></ListItemIcon>
+                <ListItemText primary={page.title} />
+            </ListItem>
+        ))
+    }
+
+    let threadSection;
+    if(showThreadSection){
+        threadSection =
+            <PageThreadsList
+                pageId={selectedPage}
+                threadPathSetter={setSelectedThreadPath}
+                setSelectedThreadId={setSelectedThreadId}
+                setSelectedThreadName={setSelectedThreadName}
+                setShowThreadSectionPost={setShowThreadSectionPost}
+            />
+    }
+
+
+    let addNewThreadPost;
+    if(showThreadSectionPost){
+        addNewThreadPost = <ThreadPostForm id={selectedThreadId} name={selectedThreadName}/>;
+    }
 
     return (
         <div className={classes.root}>
@@ -56,8 +121,16 @@ export default function PermanentDrawerLeft() {
             <AppBar style={{marginTop: '4%', backgroundColor: '#6e419a'}} position="fixed" className={classes.appBar}>
                 <Toolbar>
                     <Typography variant="h6" noWrap>
-                        Forum
+                        {selectedPageTitle+" "+selectedThreadName}
                     </Typography>
+                    <PageRating
+                        showRating={showRating}
+                        username={username}
+                        selectedThreadPath={selectedThreadPath}
+                        pageTitle={selectedPageTitle}
+                        pageId={selectedPage}
+                        currentRating={currentRating}
+                    />
                 </Toolbar>
             </AppBar>
             <Drawer
@@ -70,53 +143,34 @@ export default function PermanentDrawerLeft() {
             >
                 <div className={classes.toolbar}>
                     <Typography style={{marginTop:"7%"}} variant="h6" noWrap>
-                        Forum
+                        Forum Pages
                     </Typography>
                 </div>
                 <Divider />
-                <List>
-                    {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                        <ListItem button key={text}>
-                            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                            <ListItemText primary={text} />
-                        </ListItem>
-                    ))}
-                </List>
+                <Accordion>
+                    <AccordionSummary
+                        expandIcon={<ExpandMoreIcon />}
+                        aria-controls="panel1a-content"
+                        id="panel1a-header"
+                    >
+                        <Typography className={classes.heading}>Pages</Typography>
+                    </AccordionSummary>
+                    <Divider />
+                    <AccordionDetails style={{paddingRight:"0px", paddingLeft: "0px"}}>
+                        <List >
+                            <PageForm/>
+                            {pagesList}
+                        </List>
+                    </AccordionDetails>
+                </Accordion>
+
                 <Divider />
-                <List>
-                    {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                        <ListItem button key={text}>
-                            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                            <ListItemText primary={text} />
-                        </ListItem>
-                    ))}
-                </List>
+                {threadSection}
             </Drawer>
             <main className={classes.content}>
                 <div className={classes.toolbar} />
-                <Typography paragraph>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                    ut labore et dolore magna aliqua. Rhoncus dolor purus non enim praesent elementum
-                    facilisis leo vel. Risus at ultrices mi tempus imperdiet. Semper risus in hendrerit
-                    gravida rutrum quisque non tellus. Convallis convallis tellus id interdum velit laoreet id
-                    donec ultrices. Odio morbi quis commodo odio aenean sed adipiscing. Amet nisl suscipit
-                    adipiscing bibendum est ultricies integer quis. Cursus euismod quis viverra nibh cras.
-                    Metus vulputate eu scelerisque felis imperdiet proin fermentum leo. Mauris commodo quis
-                    imperdiet massa tincidunt. Cras tincidunt lobortis feugiat vivamus at augue. At augue eget
-                    arcu dictum varius duis at consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem
-                    donec massa sapien faucibus et molestie ac.
-                </Typography>
-                <Typography paragraph>
-                    Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper eget nulla
-                    facilisi etiam dignissim diam. Pulvinar elementum integer enim neque volutpat ac
-                    tincidunt. Ornare suspendisse sed nisi lacus sed viverra tellus. Purus sit amet volutpat
-                    consequat mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis risus sed
-                    vulputate odio. Morbi tincidunt ornare massa eget egestas purus viverra accumsan in. In
-                    hendrerit gravida rutrum quisque non tellus orci ac. Pellentesque nec nam aliquam sem et
-                    tortor. Habitant morbi tristique senectus et. Adipiscing elit duis tristique sollicitudin
-                    nibh sit. Ornare aenean euismod elementum nisi quis eleifend. Commodo viverra maecenas
-                    accumsan lacus vel facilisis. Nulla posuere sollicitudin aliquam ultrices sagittis orci a.
-                </Typography>
+                <ThreadPostList selectedThreadId={selectedThreadId} />
+                {addNewThreadPost}
             </main>
         </div>
     );

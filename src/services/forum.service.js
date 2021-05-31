@@ -1,28 +1,28 @@
 import axios from 'axios';
 import authHeader from './auth-header';
-import AuthService from "./auth.service";
 
-const API_URL = 'http://localhost:8080/forum/';
+
+const API_URL = 'http://localhost:8080/forum';
 
 class ForumService{
     postPage(title){
-        return axios.post(API_URL+"/page", {title});
+        return axios.post(API_URL+"/page", {title}, { headers: authHeader() });
     }
 
     postPageRating(username, pageId, pageTitle, rating){
-        return axios.post(API_URL+"/page/pageRating", {username, pageId, pageTitle, rating});
+        return axios.post(API_URL+"/page/pageRating", {username, pageId, pageTitle, rating}, { headers: authHeader() });
     }
 
     postForumThread(title, pageId){
-        return axios.post(API_URL+"/page/thread", {title, pageId});
+        return axios.post(API_URL+"/page/thread", {title, pageId}, { headers: authHeader() });
     }
 
     postForumThreadPost(content, creatorUsername, threadId){
-        return axios.post(API_URL+"/page/thread/threadPost", {content, creatorUsername, threadId});
+        return axios.post(API_URL+"/page/thread/threadPost", {content, creatorUsername, threadId}, { headers: authHeader() });
     }
 
     postForumThreadPostUpvote(threadPostId, username){
-        return axios.post(API_URL+"/page/thread/threadPost/upvote", {threadPostId, username});
+        return axios.post(API_URL+"/page/thread/threadPost/upvote", {threadPostId, username}, { headers: authHeader() });
     }
 
 
@@ -43,7 +43,7 @@ class ForumService{
     }
 
     getPages(){
-        return axios.get(API_URL+"/page/pages", { headers: authHeader() });
+        return axios.get(API_URL+"/pages", { headers: authHeader() });
     }
 
     getPageThreads(pageId){
@@ -51,7 +51,9 @@ class ForumService{
     }
 
     getThreadPosts(threadId){
-        return axios.get(API_URL+"/page/threads/"+threadId+"/threadposts", { headers: authHeader() });
+        return axios.get(API_URL+"/page/thread/"+threadId+"/threadposts", { headers: authHeader() });
     }
 
 }
+
+export default new ForumService();
