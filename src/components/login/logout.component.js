@@ -3,6 +3,6 @@ import {Redirect} from "react-router-dom";
 
 export default function logOut() {
     AuthService.logout();
-    window.location.href = '/testLogin';
+    window.location.href = '/login';
 
 }
