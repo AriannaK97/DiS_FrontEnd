@@ -90,7 +90,7 @@ export default function FeedCard() {
     const renderContent = (post) => {
         if(post.content === null){
             return(
-                <p>There are new update in page {post.pageTitle}</p>
+                <p>There are new updates in page {post.pageTitle}</p>
             );
         }else if(post.pageTitle === null){
             return (
