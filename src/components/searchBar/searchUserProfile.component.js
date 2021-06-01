@@ -13,9 +13,9 @@ import Typography from "@material-ui/core/Typography";
 import CardActions from "@material-ui/core/CardActions";
 import ShareIcon from "@material-ui/icons/Share";
 import UserService from "../../services/user.service";
-import SentimentSatisfiedAltIcon from '@material-ui/icons/SentimentSatisfiedAlt';
-import SentimentVeryDissatisfiedIcon from '@material-ui/icons/SentimentVeryDissatisfied';
-import StarOutlineIcon from "@material-ui/icons/StarOutline";
+// import SentimentSatisfiedAltIcon from '@material-ui/icons/SentimentSatisfiedAlt';
+// import SentimentVeryDissatisfiedIcon from '@material-ui/icons/SentimentVeryDissatisfied';
+// import StarOutlineIcon from "@material-ui/icons/StarOutline";
 import {Redirect} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -66,82 +66,87 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 // noinspection DuplicatedCode
-export default function Profile() {
+export default function Profile(props) {
     const classes = useStyles();
-    const currentUser = AuthService.getCurrentUser();
-    const userColour = currentUser.user.color;
-    const username = currentUser.user.username;
+    const currentUser = props.user;
+    const userColour = currentUser.color;
+    const username = currentUser.username;
     const [posts, setPosts] = useState([ ]);
     const nullReactionState = useState(0);
     const happyReactionState =  useState(1);
     const sadReactionState = useState(2);
+    const visitorUser = AuthService.getCurrentUser();
+    const visitorUsername = visitorUser.user.username
+    setPosts(currentUser.userFeedPosts);
 
 
-    useEffect(() => {
-            setPosts(currentUser.user.userFeedPosts);
-            console.log(currentUser);
-        },
-        [],
-    );
+    // useEffect(() => {
+    //         setPosts(currentUser.userFeedPosts);
+    //         console.log(currentUser);
+    //     },
+    //     [],
+    // );
 
-    const handleReaction = (id, username, reactionType) => {
+    const handleReaction = (id, visitorUsername, reactionType) => {
         console.log("test " + reactionType);
         if(reactionType === 0){
-            UserService.deletePostReaction(id, username).then(response => response.status);
+            UserService.deletePostReaction(id, visitorUsername).then(response => response.status);
             return <Redirect to={"/feed"}/>
         }else{
             console.log("post reaction");
-            UserService.postReaction(id, username, reactionType).then(response => response.status);
+            UserService.postReaction(id, visitorUsername, reactionType).then(response => response.status);
             return <Redirect to={"/feed"}/>
         }
     }
 
-    const renderReactionIcons = (post) => {
-        if(post.pageTitle === null){
-            if(post.currentUserReaction === 0 || post.currentUserReaction === null){
-                return(
-                    <div>
-                        <IconButton aria-label="add to favorites">
-                            <SentimentSatisfiedAltIcon id={post.postId} style={{color: 'gray'}} onClick={() => handleReaction(post.postId, username[0], happyReactionState[0])}/>
-                        </IconButton>
-                        <IconButton aria-label="add to favorites">
-                            <SentimentVeryDissatisfiedIcon id={post.postId} style={{color: "gray"}} onClick={() => handleReaction(post.postId, username[0], sadReactionState[0])}/>
-                        </IconButton>
-                    </div>
-                );
-            }else if(post.currentUserReaction === 1){
-                return(
-                    <div>
-                        <IconButton aria-label="add to favorites">
-                            <SentimentSatisfiedAltIcon id={post.postId} style={{color: 'forestgreen'}} onClick={() => handleReaction(post.postId, username[0], nullReactionState[0])}/>
-                        </IconButton>
-                        <IconButton aria-label="add to favorites">
-                            <SentimentVeryDissatisfiedIcon id={post.postId} style={{color: "gray"}} onClick={() => handleReaction(post.postId, username[0], sadReactionState[0])}/>
-                        </IconButton>
-                    </div>
-                );
-            }else if(post.currentUserReaction === 2){
-                return(
-                    <div>
-                        <IconButton aria-label="add to favorites">
-                            <SentimentSatisfiedAltIcon id={post.postId} style={{color: 'gray'}} onClick={() => handleReaction(post.postId, username[0], happyReactionState[0])}/>
-                        </IconButton>
-                        <IconButton aria-label="add to favorites">
-                            <SentimentVeryDissatisfiedIcon id={post.postId} style={{color: "indianred"}} onClick={() => handleReaction(post.postId, username[0], nullReactionState[0])}/>
-                        </IconButton>
-                    </div>
-                );
-            }
-        }else{
-            return(
-                <div>
-                    <IconButton aria-label="page rating">
-                        <StarOutlineIcon id={post.postId} style={{color: 'gray'}} />
-                    </IconButton>
-                </div>
-            );
-        }
-    }
+    //todo: fix reactions for visitorUser
+
+    // const renderReactionIcons = (post) => {
+    //     if(post.pageTitle === null){
+    //         if(post.currentUserReaction === 0 || post.currentUserReaction === null){
+    //             return(
+    //                 <div>
+    //                     <IconButton aria-label="add to favorites">
+    //                         <SentimentSatisfiedAltIcon id={post.postId} style={{color: 'gray'}} onClick={() => handleReaction(post.postId, username[0], happyReactionState[0])}/>
+    //                     </IconButton>
+    //                     <IconButton aria-label="add to favorites">
+    //                         <SentimentVeryDissatisfiedIcon id={post.postId} style={{color: "gray"}} onClick={() => handleReaction(post.postId, username[0], sadReactionState[0])}/>
+    //                     </IconButton>
+    //                 </div>
+    //             );
+    //         }else if(post.currentUserReaction === 1){
+    //             return(
+    //                 <div>
+    //                     <IconButton aria-label="add to favorites">
+    //                         <SentimentSatisfiedAltIcon id={post.postId} style={{color: 'forestgreen'}} onClick={() => handleReaction(post.postId, username[0], nullReactionState[0])}/>
+    //                     </IconButton>
+    //                     <IconButton aria-label="add to favorites">
+    //                         <SentimentVeryDissatisfiedIcon id={post.postId} style={{color: "gray"}} onClick={() => handleReaction(post.postId, username[0], sadReactionState[0])}/>
+    //                     </IconButton>
+    //                 </div>
+    //             );
+    //         }else if(post.currentUserReaction === 2){
+    //             return(
+    //                 <div>
+    //                     <IconButton aria-label="add to favorites">
+    //                         <SentimentSatisfiedAltIcon id={post.postId} style={{color: 'gray'}} onClick={() => handleReaction(post.postId, username[0], happyReactionState[0])}/>
+    //                     </IconButton>
+    //                     <IconButton aria-label="add to favorites">
+    //                         <SentimentVeryDissatisfiedIcon id={post.postId} style={{color: "indianred"}} onClick={() => handleReaction(post.postId, username[0], nullReactionState[0])}/>
+    //                     </IconButton>
+    //                 </div>
+    //             );
+    //         }
+    //     }else{
+    //         return(
+    //             <div>
+    //                 <IconButton aria-label="page rating">
+    //                     <StarOutlineIcon id={post.postId} style={{color: 'gray'}} />
+    //                 </IconButton>
+    //             </div>
+    //         );
+    //     }
+    // }
 
     let cardsArray = null
     if(posts){
@@ -167,7 +172,7 @@ export default function Profile() {
                         </Typography>
                     </CardContent>
                     <CardActions disableSpacing>
-                        {renderReactionIcons(post)}
+                        {/*{renderReactionIcons(post)}*/}
                         <IconButton aria-label="share">
                             <ShareIcon style={{color: 'green'}}/>
                         </IconButton>
@@ -182,13 +187,13 @@ export default function Profile() {
         <div className="container" style={{marginTop: "70px"}}>
             <header className="jumbotron" style={{backgroundColor: "whitesmoke"}}>
                 <h3>
-                    <strong>{currentUser.user.username}</strong>
+                    <strong>{username}</strong>
                 </h3>
                 <Avatar alt={username} aria-label="post" className={classes.large} style={{backgroundColor: userColour, margin:"20px auto -30px auto"}}/>
             </header>
             <Grid container direction="row" justify="center" alignItems="center" className={classes.alignItemsAndJustifyContent}>
                 <FormDialog/>
-                {cardsArray}
+                {/*{cardsArray}*/}
             </Grid>
         </div>
     );

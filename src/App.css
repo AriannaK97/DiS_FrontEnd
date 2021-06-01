@@ -33,7 +33,7 @@ body {
 .searchBar {
   background: whitesmoke;
   border-radius: 50px 50px 50px 50px !important;
-  padding-left: 6%;
+  /*padding-left: 6%;*/
   margin:auto !important;
   width: 100% !important;
   border-color: transparent !important;

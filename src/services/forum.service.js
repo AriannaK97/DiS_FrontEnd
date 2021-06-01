@@ -42,16 +42,19 @@ class ForumService{
         return axios.get(API_URL+"/page/thread/threadPost/" + id, { headers: authHeader() });
     }
 
-    getPages(){
-        return axios.get(API_URL+"/pages", { headers: authHeader() });
+    getPages(currentUsername){
+        return axios.get(API_URL+"/pages/?currentUsername="+currentUsername, { headers: authHeader() });
     }
 
     getPageThreads(pageId){
         return axios.get(API_URL+"/page/"+pageId+"/threads", { headers: authHeader() });
     }
 
-    getThreadPosts(threadId){
-        return axios.get(API_URL+"/page/thread/"+threadId+"/threadposts", { headers: authHeader() });
+    getThreadPosts(threadId, currentUsername){
+        console.log(threadId);
+        if(threadId!==null) {
+            return axios.get(API_URL + "/page/thread/" + threadId + "/threadposts/?currentUsername=" + currentUsername, {headers: authHeader()});
+        }
     }
 
 }

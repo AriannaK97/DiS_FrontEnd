@@ -79,7 +79,6 @@ export default function FormDialog(props) {
                         aria-colspan={20}
                         margin="dense"
                         id="name"
-                        label="ThreadPostList Title"
                         type="text"
                         fullWidth
                         onChange={e => setContent(e.target.value)}

@@ -16,6 +16,7 @@ import FormDialog from "./postForm.component";
 import SentimentSatisfiedAltIcon from '@material-ui/icons/SentimentSatisfiedAlt';
 import SentimentVeryDissatisfiedIcon from '@material-ui/icons/SentimentVeryDissatisfied';
 import StarOutlineIcon from '@material-ui/icons/StarOutline';
+import ReactionList from "./reactionList.component";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -110,6 +111,9 @@ export default function FeedCard() {
                     <IconButton aria-label="add to favorites">
                         <SentimentVeryDissatisfiedIcon id={post.postId} style={{color: "gray"}} onClick={() => handleReaction(post.postId, username[0], sadReactionState[0])}/>
                     </IconButton>
+                    <IconButton aria-label="add to favorites">
+                        <ReactionList userReactions={post.userReactions}/>
+                    </IconButton>
                     </div>
                 );
             }else if(post.currentUserReaction === 1){
@@ -121,6 +125,9 @@ export default function FeedCard() {
                         <IconButton aria-label="add to favorites">
                             <SentimentVeryDissatisfiedIcon id={post.postId} style={{color: "gray"}} onClick={() => handleReaction(post.postId, username[0], sadReactionState[0])}/>
                         </IconButton>
+                        <IconButton aria-label="add to favorites">
+                            <ReactionList userReactions={post.userReactions}/>
+                        </IconButton>
                     </div>
                 );
             }else if(post.currentUserReaction === 2){
@@ -131,6 +138,9 @@ export default function FeedCard() {
                         </IconButton>
                         <IconButton aria-label="add to favorites">
                             <SentimentVeryDissatisfiedIcon id={post.postId} style={{color: "indianred"}} onClick={() => handleReaction(post.postId, username[0], nullReactionState[0])}/>
+                        </IconButton>
+                        <IconButton aria-label="add to favorites">
+                            <ReactionList userReactions={post.userReactions}/>
                         </IconButton>
                     </div>
                 );

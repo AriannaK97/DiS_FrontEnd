@@ -1,28 +1,36 @@
 import React, {useEffect, useState} from 'react';
-import clsx from 'clsx';
+// import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
+// import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import {Accordion, AccordionDetails, AccordionSummary} from "@material-ui/core";
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import ForumService from "../../services/forum.service"
-import PageForm from "./pageForm"
-import ClassIcon from '@material-ui/icons/Class';
+// import ListItem from '@material-ui/core/ListItem';
+// import ListItemIcon from '@material-ui/core/ListItemIcon';
+// import ListItemText from '@material-ui/core/ListItemText';
+// import {Accordion, AccordionDetails, AccordionSummary} from "@material-ui/core";
+// import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+// import ForumService from "../../services/forum.service"
+// import PageForm from "./pageForm"
+// import ClassIcon from '@material-ui/icons/Class';
 import PageThreadsList from "./pageThreadList"
 import ThreadPostList from "./threadPostList"
 import ThreadPostForm from "./threadPostForm"
-import UserService from "../../services/user.service";
 import AuthService from "../../services/auth.service"
 import PageRating from "./pageRating"
-
+import {useRouteMatch} from "react-router";
+import PageList from "./pageList.component"
+// import {Nav} from "react-bootstrap";
+// import Switch from "react-bootstrap/Switch";
+import {Route, useParams} from "react-router-dom";
+// import LandingPageForum from "./pageList.component"
+// import tetris from "../errorPage/tetris";
+// import Link from "@material-ui/core/Link";
+// import PageThreadList from "./pageThreadList";
+// import UserService from "../../services/user.service";
 
 
 const drawerWidth = 240;
@@ -51,13 +59,18 @@ const useStyles = makeStyles((theme) => ({
     content: {
         margin: "5% auto auto auto",
         flexGrow: 1,
-        backgroundColor: "whitesmoke",
-        padding: theme.spacing(3),
+        // backgroundColor: "whitesmoke",
+       // padding: theme.spacing(3),
     },
+    // body: {
+    //     backgroundColor: "whitesmoke !important",
+    // }
 }));
 
 
-export default function PermanentDrawerLeft() {
+export default function PermanentDrawerLeft(props) {
+    let { path, url } = useRouteMatch();
+    // let { page.title } = useParams();
     const classes = useStyles();
     const [pages, setPages] = useState([ ]);
     const [selectedPage, setSelectedPage] = useState(null);
@@ -68,34 +81,13 @@ export default function PermanentDrawerLeft() {
     const [selectedThreadPath, setSelectedThreadPath] = useState('');
     const [selectedThreadId, setSelectedThreadId] = useState('');
     const [selectedThreadName, setSelectedThreadName] = useState('');
-    const [currentRating, setCurrentRating] = useState(0);
+    const [currentRating, setCurrentRating] = useState();
     const currentUser = AuthService.getCurrentUser();
     const username = currentUser.user.username;
+    const [threadListSwitch, setThreadListSwitch] = useState();
 
-    useEffect(() => {
-        ForumService.getPages().then(response => {
-            setPages(response.data);
-            console.log(response.data);
-        })
-    },[])
+    let { pageId, threadId } = useParams();
 
-    const selectPage = (pageId, title, page) => {
-        setSelectedPage(pageId);
-        setSelectedPageTitle(title);
-        setSelectedThreadName('');
-        setShowThreadSection(true);
-        setShowRating(true);
-    }
-
-    let pagesList = null;
-    if(pages){
-        pagesList = pages.map(page => (
-            <ListItem button key={page.title} onClick={()=>selectPage(page.id, page.title)}>
-                <ListItemIcon><ClassIcon /></ListItemIcon>
-                <ListItemText primary={page.title} />
-            </ListItem>
-        ))
-    }
 
     let threadSection;
     if(showThreadSection){
@@ -106,6 +98,7 @@ export default function PermanentDrawerLeft() {
                 setSelectedThreadId={setSelectedThreadId}
                 setSelectedThreadName={setSelectedThreadName}
                 setShowThreadSectionPost={setShowThreadSectionPost}
+                setThreadListSwitch={setThreadListSwitch}
             />
     }
 
@@ -142,28 +135,21 @@ export default function PermanentDrawerLeft() {
                 anchor="left"
             >
                 <div className={classes.toolbar}>
-                    <Typography style={{marginTop:"7%"}} variant="h6" noWrap>
-                        Forum Pages
-                    </Typography>
+                    <Typography style={{marginTop:"7%"}} variant="h6" noWrap>Forum</Typography>
                 </div>
                 <Divider />
-                <Accordion>
-                    <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
-                        aria-controls="panel1a-content"
-                        id="panel1a-header"
-                    >
-                        <Typography className={classes.heading}>Pages</Typography>
-                    </AccordionSummary>
-                    <Divider />
-                    <AccordionDetails style={{paddingRight:"0px", paddingLeft: "0px"}}>
-                        <List >
-                            <PageForm/>
-                            {pagesList}
-                        </List>
-                    </AccordionDetails>
-                </Accordion>
-
+                    <PageList
+                        setSelectedPage={setSelectedPage}
+                        setSelectedPageTitle={setSelectedPageTitle}
+                        setSelectedThreadName={setSelectedThreadName}
+                        setShowThreadSection={setShowThreadSection}
+                        setShowRating={setShowRating}
+                        username={username}
+                        setPages={setPages}
+                        classes={classes}
+                        pages={pages}
+                        setCurrentRating={setCurrentRating}
+                    />
                 <Divider />
                 {threadSection}
             </Drawer>
@@ -172,6 +158,8 @@ export default function PermanentDrawerLeft() {
                 <ThreadPostList selectedThreadId={selectedThreadId} />
                 {addNewThreadPost}
             </main>
+
+
         </div>
     );
 }

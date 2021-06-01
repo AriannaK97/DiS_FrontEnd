@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -43,6 +43,7 @@ export default function FormDialog() {
 
     return (
         <div>
+            {alertBanner}
             <ListItem button onClick={handleClickOpen} style={{backgroundColor: "#ccb0e7", paddingRight: "95.5px"}}>
                 <ListItemIcon><AddCircleOutlineIcon/></ListItemIcon>
                 <ListItemText primary={"Add Page"}/>

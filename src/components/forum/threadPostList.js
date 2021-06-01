@@ -11,9 +11,9 @@ import React, {useEffect, useState} from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import ForumService from "../../services/forum.service";
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
-import ThumbDownIcon from '@material-ui/icons/ThumbDown';
-import UserService from "../../services/user.service";
 import AuthService from "../../services/auth.service";
+import {useParams} from "react-router-dom";
+import UpVoteList from "./upVoteList.component"
 
 const useStyles = makeStyles((theme) => ({
     large: {
@@ -71,10 +71,13 @@ export default function ThreadPostList(props){
     const upReactionState =  useState(1);
     const downReactionState = useState(2);
     const currentUser = AuthService.getCurrentUser();
-    const username = currentUser.user.username
+    const username = currentUser.user.username;
+
+    // const threadId = props.threadId;
+    console.log(threadPosts)
 
     useEffect(() => {
-        ForumService.getThreadPosts(threadId).then(response => {
+        ForumService.getThreadPosts(threadId, username).then(response => {
             setThreadPosts(response.data);
             console.log(response.data);
         })
@@ -87,19 +90,25 @@ export default function ThreadPostList(props){
 
     const renderVoteIcons = (post) => {
         console.log("here "+ post.id)
-        if(post.currentUserReaction === 0 || post.currentUserReaction === null || true){
+        if(post.currentUserReaction === false || post.currentUserReaction === null ){
             return(
                 <div>
                     <IconButton aria-label="add to favorites">
                         <ThumbUpIcon id={post.id} style={{color: 'gray'}} onClick={() => handleVotes(post.id, username, upReactionState[0])}/>
                     </IconButton>
+                    <IconButton aria-label="upvote post">
+                        <UpVoteList upVotes={post.upVotes} />
+                    </IconButton>
                 </div>
             );
-        }else if(post.currentUserReaction === 1){
+        }else if(post.currentUserReaction === true){
             return(
                 <div>
-                    <IconButton aria-label="add to favorites">
+                    <IconButton aria-label="upvote post">
                         <ThumbUpIcon id={post.id} style={{color: 'forestgreen'}} onClick={() => handleVotes(post.id, username, nullReactionState[0])}/>
+                    </IconButton>
+                    <IconButton aria-label="upvote post">
+                    <UpVoteList upVotes={post.upVotes} />
                     </IconButton>
                 </div>
             );
@@ -114,14 +123,14 @@ export default function ThreadPostList(props){
                     <CardHeader classes={{title: classes.CardHeader,subheader: classes.CardHeader}}
                                 style={{ color:'whitesmoke'}}
                                 avatar={
-                                    <Avatar alt={post.username} aria-label="post" className={classes.avatar} style={{backgroundColor: post.userColor}}/>
+                                    <Avatar alt={post.username} aria-label="post" className={classes.avatar} style={{backgroundColor: post.creatorColor}}/>
                                 }
                                 action={
                                     <IconButton aria-label="settings">
                                         <MoreVertIcon />
                                     </IconButton>
                                 }
-                                title={post.username}
+                                title={post.creatorUsername}
                                 subheader={post.timestamp}
                     />
                     <CardContent>

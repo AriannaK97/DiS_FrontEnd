@@ -1,60 +1,21 @@
 import React, { Component } from "react";
+import GitHubIcon from '@material-ui/icons/GitHub';
+import {Container} from "@material-ui/core";
+import Button from "@material-ui/core/Button";
+import IconButton from "@material-ui/core/IconButton";
 
-import UserService from "../../services/user.service";
 
-export default class Home extends Component {
-    constructor(props) {
-        super(props);
+export default function Home () {
 
-        this.state = {
-            users: [],
-            message: null
-        };
-    }
-
-    componentDidMount() {
-        UserService.getAllUsers().then(
-            response => {
-                this.setState({
-                    users: response.data
-                });
-            },
-            error => {
-                this.setState({
-                    content:
-                        (error.response && error.response.data) ||
-                        error.message ||
-                        error.toString()
-                });
-            }
-        );
-    }
-
-    render() {
-        return (
-            <div className="container">
-                <table className="table">
-                    <thead>
-                    <tr>
-                        <th>Username</th>
-                        <th>Email</th>
-                        <th>Phone</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {
-                        this.state.users.map(
-                            user =>
-                                <tr key={user.username}>
-                                    <td>{user.username}</td>
-                                    <td>{user.email}</td>
-                                    <td>{user.phone}</td>
-                                </tr>
-                        )
-                    }
-                    </tbody>
-                </table>
-            </div>
-        );
-    }
+    return(
+        <Container style={{backgroundColor: '#282c34', color: "whitesmoke", borderRadius: 16, borderWidth: 1, width: 500,
+            margin: "10% auto auto auto", justifyContent: "center", padding: "1%", fontWeight: "bold"}}>
+            <p>Welcome to Di's Social Application or DiS! This is a team project for class M151 of the
+                department's Computer Science Master program.</p>
+            <p>Group Project by Anna Kavvada & Fotis Memis</p>
+            <IconButton href={"https://github.com/fotis120/DiSocialApp"} aria-label="add to favorites">
+                <GitHubIcon color={"secondary"}/>
+            </IconButton>
+        </Container>
+    );
 }

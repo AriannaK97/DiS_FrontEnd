@@ -13,11 +13,12 @@ import Home from "./components/home/home.component";
 import AuthService from "./services/auth.service"
 import LogOut from "./components/login/logout.component"
 import Divider from "@material-ui/core/Divider";
-import SearchIcon from '@material-ui/icons/Search';
 import Messenger from "./components/chat/messenger/messenger.component"
-import UserService from "./services/user.service"
 import {Container} from "@material-ui/core";
 import Tetris from "./components/errorPage/tetris"
+// import ThreadPostList from "./components/forum/threadPostList";
+// import PageForm from "./components/forum/pageForm";
+import SearchBarResultPageComponent from "./components/searchBar/searchBarResultPage.component";
 
 
 class App extends Component {
@@ -27,7 +28,8 @@ class App extends Component {
             isAuthenticated: false,
             loggedIn: localStorage.getItem('token') ? true : false,
             username: '',
-            showOpeningMessage: true
+            showOpeningMessage: true,
+            visitedUser:''
         };
     }
 
@@ -43,26 +45,6 @@ class App extends Component {
         this.forceUpdate();
     }
 
-    handleSearch = (event, searchParam) => {
-        if (event.key === 'Enter') {
-            UserService.getSearch(searchParam).then(response => response.status);
-            console.log(searchParam);
-        }
-    }
-
-    openingMessage = () => {
-        if(this.showOpeningMessage===true){
-            return(
-                <Container style={{backgroundColor: '#282c34', color: "whitesmoke", borderRadius: 16, borderWidth: 1, width: 500,
-                    margin: "10% auto auto auto", justifyContent: "center", padding: "1%", fontWeight: "bold"}}>
-                    <p>Welcome to Di's Social Application or DiS! This is a team project for class M151 of the
-                        department's Computer Science Master program.</p>
-                </Container>
-            )
-        }else{
-            return(<div/>)
-        }
-    }
 
     render() {
     //const isLoggedIn = localStorage.getItem('token');
@@ -114,11 +96,12 @@ class App extends Component {
                             </Col>
                             <Col className="d-md-flex d-block flex-row mx-md-auto mx-0">
                                 <Form className="d-md-flex d-block flex-row mx-md-auto mx-8 searchBar" >
-                                    <Form.Control type="text" placeholder="Search" className="searchBar"  onChange={() => this.handleSearch(searchParam)}/>
+                                    <Form.Control type="text" placeholder="Search" className="searchBar"/>
+                                    <SearchBarResultPageComponent visitor={this.visitor} searchParam={searchParam}/>
                                 </Form>
-                                <div className={"searchIcon"}>
-                                    <SearchIcon />
-                                </div>
+                                {/*<div className={"searchIcon"}>*/}
+                                {/*    <SearchIcon />*/}
+                                {/*</div>*/}
                             </Col>
                             <Col className="d-md-flex d-block flex-row mx-md-auto mx-0">
                                 <Navbar.Collapse className="justify-content-end navbarLinks" on>
@@ -137,10 +120,14 @@ class App extends Component {
                             <Route path="/testRegister" component={testRegister} />
                             <Route path="/testProfile" component={testProfile} />
                             <Route path="/feed" component={NewsFeed} />
-                            <Route path="/forum" component={Forum} />
+                            <Route exact path="/forum" component={Forum} />
+                            {/*<Route exact path={`/forum/pages/:pageId/:threadId`}><Forum mode={"thread"}/></Route>*/}
+                            {/*<Route exact path={`/forum/pages/:pageId/`}><Forum mode={"page"}/></Route>*/}
+                            {/*<Route exact path={`/forum/pages/:pageId/addPage`}><Forum mode={"add"}/></Route>*/}
                             <Route path="/logout" component={LogOut} />
                             <Route path="/messenger" component={Messenger} />
                             <Route path="/errorPage" component={Tetris} />
+                            <Route path="/searchUserResult" ><SearchBarResultPageComponent/></Route>
                         </Switch>
                     </div>
                 </Router>

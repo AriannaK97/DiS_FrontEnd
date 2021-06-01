@@ -8,8 +8,10 @@ import ForumService from "../../services/forum.service";
 import {makeStyles} from "@material-ui/core/styles";
 import ThreadForm from "./threadForm"
 import Switch from "react-bootstrap/Switch";
-import {BrowserRouter, Route} from "react-router-dom";
-import Link from "@material-ui/core/Link";
+import {Route, useParams} from "react-router-dom";
+import {Nav} from "react-bootstrap";
+import ThreadPostList from "./threadPostList";
+import {useRouteMatch} from "react-router";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -18,7 +20,8 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function PageThreadList(props){
-    const classes = useStyles();
+    // let { pageId } = useParams();
+    // let { path, url } = useRouteMatch();
     const pageId = props.pageId;
     const threadPathSetter = props.threadPathSetter;
     const setSelectedThreadName = props.setSelectedThreadName;
@@ -26,7 +29,10 @@ export default function PageThreadList(props){
     const [pageThreads, setPageThreads] = useState([]);
     const [selectedThread, setSelectedThread] = useState();
     const setShowThreadSectionPost = props.setShowThreadSectionPost;
-    console.log("pageThreadList" + pageId)
+    const setThreadListSwitch =  props.setThreadListSwitch;
+
+
+
 
     useEffect(() => {
         ForumService.getPageThreads(pageId).then(response => {
@@ -42,25 +48,26 @@ export default function PageThreadList(props){
         setSelectedThreadId(id);
         setSelectedThreadName(title);
         setShowThreadSectionPost(true);
+        setThreadListSwitch(threadSwitch);
         console.log("here i am")
     };
 
+    let threadSwitch
     return(
-
+        <div>
         <List>
             <ThreadForm id={pageId}/>
             {pageThreads.map(thread => (
                 <div>
-                    <ListItem href={"/"+thread.title} button key={thread.title} onClick={()=>handleSelect(thread.title, thread.id)}>
+                    {/*<Nav.Link id={thread.id} href={`${url}/${thread.id}`}>*/}
+                    <ListItem id={thread.id} button key={thread.id} onClick={()=>handleSelect(thread.title, thread.id)}>
                         <ListItemIcon><ArrowForwardIosIcon/></ListItemIcon>
                         <ListItemText primary={thread.title} />
-                        <Link to={"/"+selectedThread}/>
                     </ListItem>
-                    <Switch>
-                        <Route path={"/"+selectedThread} component={thread} />
-                    </Switch>
+                    {/*</Nav.Link>*/}
                 </div>
             ))}
         </List>
+        </div>
     )
 }
