@@ -55,6 +55,10 @@ export default function ReactionList(props) {
         setOpen(false);
     };
 
+    const redirectToUserProfile = (username) => {
+        window.location.href = `/profile/${username}`;
+    }
+
     const reactionType = (userReaction) => {
         if(userReaction.reactionType===1){
             return(
@@ -83,7 +87,7 @@ export default function ReactionList(props) {
                 <DialogTitle id="simple-dialog-title">Users reacted to this post:</DialogTitle>
                 <List>
                     {userReactions.map((userReaction) => (
-                        <ListItem button key={userReaction.username}>
+                        <ListItem button key={userReaction.username} onClick={()=>redirectToUserProfile(userReaction.username)}>
                             <ListItemAvatar>
                                 <Avatar className={classes.avatar}>
                                     <PersonIcon />

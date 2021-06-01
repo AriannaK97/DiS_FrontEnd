@@ -40,6 +40,9 @@ export default function UpvoteList(props) {
         setOpen(false);
     };
 
+    const redirectToUserProfile = (username) => {
+        window.location.href = `/profile/${username}`;
+    }
 
     return (
         <div>
@@ -48,7 +51,7 @@ export default function UpvoteList(props) {
             <DialogTitle id="simple-dialog-title">Users up-voting this post:</DialogTitle>
             <List>
                 {upVotes.map((upVote) => (
-                    <ListItem button key={upVote}>
+                    <ListItem button key={upVote} onClick={()=>redirectToUserProfile(upVote)}>
                         <ListItemAvatar>
                             <Avatar className={classes.avatar}>
                                 <PersonIcon />
