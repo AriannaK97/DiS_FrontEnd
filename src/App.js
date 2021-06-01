@@ -1,9 +1,8 @@
 import './App.css';
 import NewsFeed from './components/feed/feed.component'
-import testHome from "./components/home/home.component";
-import testProfile from "./components/profile/profile.component";
-import testLogin from "./components/login/login.component";
-import testRegister from "./components/login/register.component";
+import Profile from "./components/profile/profile.component";
+import Login from "./components/login/login.component";
+import Register from "./components/login/register.component";
 import Forum from "./components/forum/forum.component"
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import {React, Component} from 'react';
@@ -63,18 +62,15 @@ class App extends Component {
                             <Col className="d-md-flex d-block flex-row mx-md-auto mx-0">
                                 <Navbar.Collapse className="justify-content-end navbarLinks" on>
                                     <Nav.Link className={"navbarLinksRight"} href="/testRegister">Register</Nav.Link>
-                                    <Nav.Link className={"navbarLinksRight"} href="/testLogin">Login</Nav.Link>
+                                    <Nav.Link className={"navbarLinksRight"} href="/login">Login</Nav.Link>
                                     <Nav.Link className={"navbarLinksRight"} href="/errorPage">errorPage</Nav.Link>
                                 </Navbar.Collapse>
                             </Col>
                         </Navbar>
                         <Switch>
                             <Route exact path="/home" component={Home} />
-                            <Route path="/testHome" component={testHome} />
-                            <Route path="/testLogin" component={testLogin} />
-                            <Route path="/testRegister" component={testRegister} />
-                            <Route path="/testProfile" component={testProfile} />
-                            <Route path="/feed" component={NewsFeed} />
+                            <Route path="/login" component={Login} />
+                            <Route path="/register" component={Register} />
                             <Route path="/errorPage" component={Tetris} />
                         </Switch>
                     </div>
@@ -99,14 +95,11 @@ class App extends Component {
                                     <Form.Control type="text" placeholder="Search" className="searchBar"/>
                                     <SearchBarResultPageComponent visitor={this.visitor} searchParam={searchParam}/>
                                 </Form>
-                                {/*<div className={"searchIcon"}>*/}
-                                {/*    <SearchIcon />*/}
-                                {/*</div>*/}
                             </Col>
                             <Col className="d-md-flex d-block flex-row mx-md-auto mx-0">
                                 <Navbar.Collapse className="justify-content-end navbarLinks" on>
                                     <Nav.Link className={"navbarLinksRight"} href="/messenger">Messages</Nav.Link>
-                                    <Nav.Link className={"navbarLinksRight"} href="/testProfile">{username}</Nav.Link>
+                                    <Nav.Link className={"navbarLinksRight"} href={`/profile/${username}`}>{username}</Nav.Link>
                                     <Divider orientation="vertical" style={{backgroundColor:"whitesmoke"}} flexItem />
                                     <Nav.Link className={"navbarLinksRight navbar-btn"} href="/logout">Log Out</Nav.Link>
                                 </Navbar.Collapse>
@@ -115,10 +108,9 @@ class App extends Component {
                         </Navbar>
                         <Switch>
                             <Route exact path="/home" component={Home} />
-                            <Route path="/testHome" component={testHome} />
-                            <Route path="/testLogin" component={testLogin} />
-                            <Route path="/testRegister" component={testRegister} />
-                            <Route path="/testProfile" component={testProfile} />
+                            <Route path="/login" component={Login} />
+                            <Route path="/register" component={Register} />
+                            <Route path="/profile/:username" component={Profile} />
                             <Route path="/feed" component={NewsFeed} />
                             <Route exact path="/forum" component={Forum} />
                             {/*<Route exact path={`/forum/pages/:pageId/:threadId`}><Forum mode={"thread"}/></Route>*/}
@@ -127,7 +119,6 @@ class App extends Component {
                             <Route path="/logout" component={LogOut} />
                             <Route path="/messenger" component={Messenger} />
                             <Route path="/errorPage" component={Tetris} />
-                            <Route path="/searchUserResult" ><SearchBarResultPageComponent/></Route>
                         </Switch>
                     </div>
                 </Router>

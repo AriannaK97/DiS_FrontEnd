@@ -21,6 +21,7 @@ class AuthService {
 
     logout() {
         localStorage.removeItem("user");
+        localStorage.clear();
     }
 
     register(username, email, phone, password) {
@@ -34,6 +35,10 @@ class AuthService {
 
     getCurrentUser() {
         return JSON.parse(localStorage.getItem('user'));
+    }
+
+    getProfileByUsername(username) {
+        return axios.get(API_URL+"profile/"+username);
     }
 
 }

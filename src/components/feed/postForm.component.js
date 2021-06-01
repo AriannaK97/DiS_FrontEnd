@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Button from "@material-ui/core/Button";
 import {
     Dialog,
@@ -55,15 +55,26 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function FormDialog() {
+export default function FormDialog(props) {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
     const [content, setContent] = useState(null);
     const [posted, setPosted] = useState(false);
-    const user = AuthService.getCurrentUser()
-    const username = user.user.username
-    const avatarColor = user.user.color;
+    const [user, setCurrentUser] = useState();
+    const [color, setUserColor] = useState();
+    const username = props.username
+    //const username = user.username
+    //const avatarColor = user.color;
     console.log(user);
+
+    useEffect(() => {
+            AuthService.getProfileByUsername(username).then(response=>{
+                setCurrentUser(response.data);
+                setUserColor(response.data.color);
+            })
+        },
+        [username],
+    );
 
     let alertBanner = null
     if(posted === true) {
@@ -97,7 +108,7 @@ export default function FormDialog() {
         <FormControl className={classes.DummyFrontForm} variant={"outlined"} onClick={handleClickOpen} color={"secondary"} square={false} >
             <Row>
                 <Col sm={2}>
-                <Avatar aria-label="post" className={classes.avatar} style={{backgroundColor: avatarColor}}/>
+                <Avatar aria-label="post" className={classes.avatar} style={{backgroundColor: color}}/>
                 </Col>
                 <Col sm={10}>
                     <InputLabel className={classes.DummyInputLabel} htmlFor="my-input">Create Post</InputLabel>
@@ -109,7 +120,7 @@ export default function FormDialog() {
         <Dialog className={classes.MuiDialog} open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
             <DialogTitle id="form-dialog-title" >Create Post</DialogTitle>
             <DialogContent>
-                <DialogContentText>What's on your mind? </DialogContentText>
+                <DialogContentText>What's on your mind?</DialogContentText>
                 <TextField
                     id="standard-multiline-flexible"
                     multiline

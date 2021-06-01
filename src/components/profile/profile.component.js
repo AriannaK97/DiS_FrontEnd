@@ -17,6 +17,7 @@ import SentimentSatisfiedAltIcon from '@material-ui/icons/SentimentSatisfiedAlt'
 import SentimentVeryDissatisfiedIcon from '@material-ui/icons/SentimentVeryDissatisfied';
 import StarOutlineIcon from "@material-ui/icons/StarOutline";
 import {Redirect} from "react-router-dom";
+import {useParams} from "react-router";
 
 const useStyles = makeStyles((theme) => ({
     large: {
@@ -65,23 +66,29 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-// noinspection DuplicatedCode
+
 export default function Profile() {
     const classes = useStyles();
-    const currentUser = AuthService.getCurrentUser();
-    const userColour = currentUser.user.color;
-    const username = currentUser.user.username;
-    const [posts, setPosts] = useState([ ]);
+    const [currentUser, setCurrentUser] = useState();
+    const [userColor, setUserColor] = useState();
+    //const userColour = currentUser.color;
     const nullReactionState = useState(0);
     const happyReactionState =  useState(1);
     const sadReactionState = useState(2);
+    const [userFeedPosts, setUserFeedPosts] = useState([]);
+
+    let { username } = useParams();
+    console.log(username)
 
 
     useEffect(() => {
-            setPosts(currentUser.user.userFeedPosts);
-            console.log(currentUser);
+        AuthService.getProfileByUsername(username).then(response=>{
+            setUserFeedPosts(response.data.userFeedPosts);
+            setCurrentUser(response.data);
+            setUserColor(response.data.color);
+        })
         },
-        [],
+        [username],
     );
 
     const handleReaction = (id, username, reactionType) => {
@@ -144,14 +151,14 @@ export default function Profile() {
     }
 
     let cardsArray = null
-    if(posts){
-        cardsArray = posts.map(post => (
+    if(userFeedPosts){
+        cardsArray = userFeedPosts.map(post => (
             <Grid item key={post.id} className={classes.cardStyle}>
                 <Card id={post.id} style={{ color:'whitesmoke'}} className={classes.root}>
                     <CardHeader classes={{title: classes.CardHeader,subheader: classes.CardHeader}}
                                 style={{ color:'whitesmoke'}}
                                 avatar={
-                                    <Avatar alt={post.username} aria-label="post" className={classes.avatar} style={{backgroundColor: post.userColor}}/>
+                                    <Avatar alt={post.username} aria-label="post" className={classes.avatar} style={{backgroundColor: userColor}}/>
                                 }
                                 action={
                                     <IconButton aria-label="settings">
@@ -182,12 +189,12 @@ export default function Profile() {
         <div className="container" style={{marginTop: "70px"}}>
             <header className="jumbotron" style={{backgroundColor: "whitesmoke"}}>
                 <h3>
-                    <strong>{currentUser.user.username}</strong>
+                    <strong>{username}</strong>
                 </h3>
-                <Avatar alt={username} aria-label="post" className={classes.large} style={{backgroundColor: userColour, margin:"20px auto -30px auto"}}/>
+                <Avatar alt={username} aria-label="post" className={classes.large} style={{backgroundColor: userColor, margin:"20px auto -30px auto"}}/>
             </header>
             <Grid container direction="row" justify="center" alignItems="center" className={classes.alignItemsAndJustifyContent}>
-                <FormDialog/>
+                <FormDialog username={username}/>
                 {cardsArray}
             </Grid>
         </div>

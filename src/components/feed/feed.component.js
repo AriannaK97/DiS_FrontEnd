@@ -193,7 +193,7 @@ export default function FeedCard() {
 
     return (
         <Grid container direction="row" justify="center" alignItems="center" className={classes.alignItemsAndJustifyContent}>
-            <FormDialog/>
+            <FormDialog username={user.user.username}/>
             {cardsArray}
         </Grid>
     );

@@ -55,23 +55,21 @@ export default function SearchBarResultPageComponent(props) {
         setOpen(false);
     };
 
-    // const redirectToUserProfile = (user) => {
-    //     return(
-    //         <SearchUserProfile user={user}/>
-    //     );
-    // }
+    const redirectToUserProfile = (username) => {
+        window.location.href = `/profile/${username}`;
+    }
 
     return (
         <div>
-            <Fab size="small" onClick={handleClickOpen} color="secondary" aria-label="search" className={classes.button}>
+            <Fab style={{backgroundColor: "#ba93e2"}} size="small" onClick={handleClickOpen} color="secondary" aria-label="search" className={classes.button}>
                 <SearchIcon />
             </Fab>
             <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
                 <DialogTitle style={{width:400}} id="simple-dialog-title">Search Results:</DialogTitle>
                 <List>
                     {searchResults.map((searchResult) => (
-                        <Nav.Link href={"/searchUserResult"}>
-                        <ListItem button key={searchResult.id} >
+                        // <Nav.Link href={ `/profile/${username}`}>
+                        <ListItem button key={searchResult.id} onClick={()=>redirectToUserProfile(searchResult.username)}>
                             <ListItemAvatar>
                                 <Avatar className={classes.avatar}>
                                     <PersonIcon />
@@ -79,7 +77,7 @@ export default function SearchBarResultPageComponent(props) {
                             </ListItemAvatar>
                             <ListItemText primary={searchResult.username} />
                         </ListItem>
-                        </Nav.Link>
+                        // </Nav.Link>
                     ))}
                 </List>
                 <DialogActions>

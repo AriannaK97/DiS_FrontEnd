@@ -18,7 +18,9 @@ import {Tooltip} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
     postButton:{
-        margin: "2% auto auto 88%"
+        // margin: "2% auto auto 85%",
+        zIndex: 2,
+        // marginRight: theme.spacing(1),
     },
     dialog:{
         width: "500 !important",
@@ -62,7 +64,7 @@ export default function FormDialog(props) {
     return (
         <div >
             <Tooltip title="Add Question" aria-label="add">
-                <Fab color="primary" aria-label="add post" className={classes.postButton} style={{backgroundColor: "#ba93e2"}}>
+                <Fab aria-label="add post" className={classes.postButton} style={{backgroundColor: "#ba93e2"}}>
                     <AddIcon onClick={handleClickOpen}/>
                 </Fab>
             </Tooltip>
