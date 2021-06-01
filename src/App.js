@@ -13,12 +13,8 @@ import AuthService from "./services/auth.service"
 import LogOut from "./components/login/logout.component"
 import Divider from "@material-ui/core/Divider";
 import Messenger from "./components/chat/messenger/messenger.component"
-import {Container} from "@material-ui/core";
 import Tetris from "./components/errorPage/tetris"
-// import ThreadPostList from "./components/forum/threadPostList";
-// import PageForm from "./components/forum/pageForm";
 import SearchBarResultPageComponent from "./components/searchBar/searchBarResultPage.component";
-import MessageList from "./components/chat/messageList/messageList.component";
 
 
 class App extends Component {
@@ -29,7 +25,8 @@ class App extends Component {
             loggedIn: localStorage.getItem('token') ? true : false,
             username: '',
             showOpeningMessage: true,
-            visitedUser:''
+            visitedUser:'',
+            searchParam: ''
         };
     }
 
@@ -45,10 +42,18 @@ class App extends Component {
         this.forceUpdate();
     }
 
+    handleSearch(s){
+        this.setState({searchParam:s.target.value})
+        console.log()
+        return(
+            <SearchBarResultPageComponent open={true} visitor={this.visitor} searchParam={this.searchParam}/>
+        );
+    }
+
 
     render() {
     //const isLoggedIn = localStorage.getItem('token');
-        const searchParam = '';
+    //     const searchParam = '';
 
         if(AuthService.getCurrentUser() === null){
             return (
@@ -91,11 +96,8 @@ class App extends Component {
                                     <Nav.Link className={"navbarLinksLeft"} href="/forum">Forum</Nav.Link>
                                 </Nav>
                             </Col>
-                            <Col className="d-md-flex d-block flex-row mx-md-auto mx-0">
-                                <Form className="d-md-flex d-block flex-row mx-md-auto mx-8 searchBar" >
-                                    <Form.Control type="text" placeholder="Search" className="searchBar"/>
-                                    <SearchBarResultPageComponent visitor={this.visitor} searchParam={searchParam}/>
-                                </Form>
+                            <Col className="d-md-flex d-block flex-row mx-md-auto mx-0 searchBar">
+                                <SearchBarResultPageComponent visitor={this.visitor} searchParam={this.searchParam}/>
                             </Col>
                             <Col className="d-md-flex d-block flex-row mx-md-auto mx-0">
                                 <Navbar.Collapse className="justify-content-end navbarLinks" on>
