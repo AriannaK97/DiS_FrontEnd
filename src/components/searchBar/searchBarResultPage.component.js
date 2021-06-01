@@ -32,16 +32,14 @@ const useStyles = makeStyles((theme)=>({
     },
     searchIcon:{
         marginTop: "0.6ch",
+        marginRight: "6px",
         color: "#ba93e2"
     },
     searchBar: {
         backgroundColor: "whitesmoke",
         borderRadius: "50px 50px 50px 50px !important",
-        /*padding-left: 6%;*/
         marginTop: "0.5ch !important",
         margin: "auto !important",
-        width: "64ch !important",
-        height: "4.5ch",
         borderColor: "transparent !important"
     }
 }));
@@ -76,8 +74,8 @@ export default function SearchBarResultPageComponent(props) {
 
     return (
         <div>
-            <TextField type="text" placeholder="Search" className={classes.searchBar} onKeyDown={e=>keyPress(e)}/>
             <SearchIcon className={classes.searchIcon}/>
+            <TextField  InputProps={{ disableUnderline: true }} type="text" placeholder="Search" className={classes.searchBar} onKeyDown={e=>keyPress(e)}/>
             <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
                 <DialogTitle style={{width:400}} id="simple-dialog-title">Search Results:</DialogTitle>
                 <List>
