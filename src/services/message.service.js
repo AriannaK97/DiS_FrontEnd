@@ -6,7 +6,7 @@ const API_URL = 'http://localhost:8080/chat';
 class MessageService{
 
     errorHandling(error) {
-        if (error.response.status === '403') {
+        if (error.response.status === 401) {
             window.location.href = '/login';
         }else if(error.response.status >= 300 || error.response.status <= 200){
             window.location.href = "/errorPage";
