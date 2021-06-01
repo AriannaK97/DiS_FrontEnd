@@ -12,7 +12,7 @@ class UserService {
     errorHandling(error) {
         if (error.response.status === '403') {
             window.location.href = '/login';
-        }else if(error.response.status >= 300 && error.response.status <= 199){
+        }else if(error.response.status >= 300 || error.response.status <= 200){
             window.location.href = "/errorPage";
         }
         else {
@@ -33,7 +33,8 @@ class UserService {
     }
 
     postUserFeedPost(content, username){
-        return axios.post('http://localhost:8080/feed/post', {content ,username}, { headers: authHeader() });
+        return axios.post('http://localhost:8080/feed/post', {content ,username},
+            { headers: authHeader() }).catch(err => {this.errorHandling(err);});
     }
 
     //todo: fix error handling for the rest
@@ -46,7 +47,7 @@ class UserService {
 
     postReaction(postId, username, reactionType){
         console.log(postId, username, reactionType);
-        return axios.post('http://localhost:8080/feed/reaction',{postId, username, reactionType}, { headers: authHeader() });
+        return axios.post('http://localhost:8080/feed/reaction',{postId, username, reactionType}, { headers: authHeader() }).catch(err => {this.errorHandling(err);});
     }
 
     getReaction(){

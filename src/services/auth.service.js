@@ -3,6 +3,19 @@ import axios from "axios";
 const API_URL = "http://localhost:8080/api/auth/";
 
 class AuthService {
+
+    errorHandling(error) {
+        if (error.response.status === '403') {
+            window.location.href = '/testLogin';
+        }
+        else if (error.response.status >= 300 || error.response.status <= 200){
+            window.location.href = '/errorPage';
+        }
+        else {
+            console.log(error);
+        }
+    }
+
     login(username, password) {
         return axios
             .post(API_URL + "login", {
@@ -16,7 +29,7 @@ class AuthService {
                 }
 
                 return response.data;
-            });
+            }).catch(err => {this.errorHandling(err);});
     }
 
     logout() {
@@ -30,7 +43,7 @@ class AuthService {
             email,
             phone,
             password
-        });
+        }).catch(err => {this.errorHandling(err);});
     }
 
     getCurrentUser() {
@@ -38,7 +51,7 @@ class AuthService {
     }
 
     getProfileByUsername(username) {
-        return axios.get(API_URL+"profile/"+username);
+        return axios.get(API_URL+"profile/"+username).catch(err => {this.errorHandling(err);});
     }
 
 }
