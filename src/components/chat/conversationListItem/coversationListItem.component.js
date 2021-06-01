@@ -1,9 +1,10 @@
 import React, {useEffect} from 'react';
 import shave from 'shave';
 import AuthService from "../../../services/auth.service";
-
+import { Nav } from "react-bootstrap";
 import './ConversationListItem.css';
 import Avatar from "@material-ui/core/Avatar";
+import {Link} from "react-router-dom";
 
 export default function ConversationListItem(props) {
     useEffect(() => {

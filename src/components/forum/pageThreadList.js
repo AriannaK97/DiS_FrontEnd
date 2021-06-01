@@ -29,7 +29,7 @@ export default function PageThreadList(props){
     const [pageThreads, setPageThreads] = useState([]);
     const [selectedThread, setSelectedThread] = useState();
     const setShowThreadSectionPost = props.setShowThreadSectionPost;
-    const setThreadListSwitch =  props.setThreadListSwitch;
+    const setShowThreadPosts = props.setShowThreadPosts;
 
 
 
@@ -48,23 +48,20 @@ export default function PageThreadList(props){
         setSelectedThreadId(id);
         setSelectedThreadName(title);
         setShowThreadSectionPost(true);
-        setThreadListSwitch(threadSwitch);
-        console.log("here i am")
+        setShowThreadPosts(true);
     };
 
-    let threadSwitch
+
     return(
         <div>
         <List>
             <ThreadForm id={pageId}/>
             {pageThreads.map(thread => (
                 <div>
-                    {/*<Nav.Link id={thread.id} href={`${url}/${thread.id}`}>*/}
                     <ListItem id={thread.id} button key={thread.id} onClick={()=>handleSelect(thread.title, thread.id)}>
                         <ListItemIcon><ArrowForwardIosIcon/></ListItemIcon>
                         <ListItemText primary={thread.title} />
                     </ListItem>
-                    {/*</Nav.Link>*/}
                 </div>
             ))}
         </List>

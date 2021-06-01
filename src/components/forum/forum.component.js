@@ -1,21 +1,11 @@
 import React, {useEffect, useState} from 'react';
-// import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-// import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
-// import ListItem from '@material-ui/core/ListItem';
-// import ListItemIcon from '@material-ui/core/ListItemIcon';
-// import ListItemText from '@material-ui/core/ListItemText';
-// import {Accordion, AccordionDetails, AccordionSummary} from "@material-ui/core";
-// import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-// import ForumService from "../../services/forum.service"
-// import PageForm from "./pageForm"
-// import ClassIcon from '@material-ui/icons/Class';
 import PageThreadsList from "./pageThreadList"
 import ThreadPostList from "./threadPostList"
 import ThreadPostForm from "./threadPostForm"
@@ -23,14 +13,7 @@ import AuthService from "../../services/auth.service"
 import PageRating from "./pageRating"
 import {useRouteMatch} from "react-router";
 import PageList from "./pageList.component"
-// import {Nav} from "react-bootstrap";
-// import Switch from "react-bootstrap/Switch";
-import {Route, useParams} from "react-router-dom";
-// import LandingPageForum from "./pageList.component"
-// import tetris from "../errorPage/tetris";
-// import Link from "@material-ui/core/Link";
-// import PageThreadList from "./pageThreadList";
-// import UserService from "../../services/user.service";
+import {useParams} from "react-router-dom";
 
 
 const drawerWidth = 240;
@@ -84,7 +67,7 @@ export default function PermanentDrawerLeft(props) {
     const [currentRating, setCurrentRating] = useState();
     const currentUser = AuthService.getCurrentUser();
     const username = currentUser.user.username;
-    const [threadListSwitch, setThreadListSwitch] = useState();
+    const [showThreadPosts, setShowThreadPosts] = useState(false);
 
     let { pageId, threadId } = useParams();
 
@@ -98,8 +81,17 @@ export default function PermanentDrawerLeft(props) {
                 setSelectedThreadId={setSelectedThreadId}
                 setSelectedThreadName={setSelectedThreadName}
                 setShowThreadSectionPost={setShowThreadSectionPost}
-                setThreadListSwitch={setThreadListSwitch}
+                setShowThreadPosts={setShowThreadPosts}
             />
+    }
+
+    const renderThreadPosts = () => {
+        if(showThreadPosts){
+            console.log(selectedThreadId);
+            return(
+                <ThreadPostList selectedThreadId={selectedThreadId} />
+            )
+        }
     }
 
 
@@ -155,7 +147,7 @@ export default function PermanentDrawerLeft(props) {
             </Drawer>
             <main className={classes.content}>
                 <div className={classes.toolbar} />
-                <ThreadPostList selectedThreadId={selectedThreadId} />
+                {renderThreadPosts()}
                 {addNewThreadPost}
             </main>
 

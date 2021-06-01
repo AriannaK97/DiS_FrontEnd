@@ -20,7 +20,7 @@ export default function Compose(props) {
             MessageService.postMessage(message, sender, recipient).then(response => response.status);
             console.log(message, sender, recipient)
             console.log('do validate');
-            setMessage(null);
+            setMessage('');
             refreshPage();
         }
     }

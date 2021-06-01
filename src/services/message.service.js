@@ -24,6 +24,11 @@ class MessageService{
         return axios.get(API_URL + "/chatHistory/?user=" + user + "&friend=" + friend,  { headers: authHeader() }).catch(err => {this.errorHandling(err);});
     }
 
+    updateChatHistory(user, friend, date){
+        return axios.get(API_URL + "/updateChatHistory/?user="+user+"&friend="+friend+"&date="+date,
+            { headers: authHeader() }).catch(err => {this.errorHandling(err);});
+    }
+
     getConversations(){
         return axios.get(API_URL+"/users", { headers: authHeader() }).catch(err => {this.errorHandling(err);});
     }

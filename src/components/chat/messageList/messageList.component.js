@@ -7,6 +7,7 @@ import moment from 'moment';
 import MessageService from "../../../services/message.service"
 import './MessageList.css';
 import AuthService from "../../../services/auth.service";
+import {useParams} from "react-router";
 
 
 export default function MessageList(props) {
@@ -15,26 +16,30 @@ export default function MessageList(props) {
     const [username] = useState(user.user.username)
     const friend = props.data;
     const setFriend = props.setter;
-    let lastMessageTimestamp;
-    // const setFriend = props.setter;
-
-
-    // useEffect(() => {
-    //     const interval = setInterval(() => {
-    //         setMessages([]);
-    //         getMessages(username, friend);
-    //     }, 1000);
-    //     return () => clearInterval(interval);
-    // }, [friend]);
+    let lastMessageTimestamp = null;
+    console.log(friend);
 
     useEffect(() => {
-        getMessages(username, friend);
-    },[friend]);
+        if(lastMessageTimestamp === null){
+            getMessages(username, friend, lastMessageTimestamp);
+        }else{
+            const interval = setInterval(() => {
+                getMessages(username, friend, lastMessageTimestamp);
+            }, 1000);
+            return () => clearInterval(interval);
+        }
+
+    }, [friend,lastMessageTimestamp]);
+
+    // useEffect(()=>{
+    //     getMessages(username, friend, lastMessageTimestamp)
+    // },[friend])
 
 
-    const getMessages = (username, currentFriend) => {
-        console.log(username, currentFriend)
-        MessageService.getMessage(username, currentFriend).then(tempMessages => {
+    const getMessages = (username, currentFriend, date) => {
+        console.log(username, currentFriend, date)
+        //window.location.href = "/messenger"
+        MessageService.updateChatHistory(username, currentFriend, date).then(tempMessages => {
             setMessages([...messages, ...tempMessages.data])
         })
     }
@@ -44,62 +49,64 @@ export default function MessageList(props) {
         let messageCount = messages.length;
         let tempMessages = [];
 
-        while (i < messageCount) {
-            let previous = messages[i - 1];
-            let current = messages[i];
-            let next = messages[i + 1];
-            let isMine = current.sender === username;
-            let currentMoment = moment(current.timestamp);
-            let prevBySameAuthor = false;
-            let nextBySameAuthor = false;
-            let startsSequence = true;
-            let endsSequence = true;
-            let showTimestamp = true;
+        if(messageCount > 0) {
+            while (i < messageCount) {
+                let previous = messages[i - 1];
+                let current = messages[i];
+                let next = messages[i + 1];
+                let isMine = current.sender === username;
+                let currentMoment = moment(current.timestamp);
+                let prevBySameAuthor = false;
+                let nextBySameAuthor = false;
+                let startsSequence = true;
+                let endsSequence = true;
+                let showTimestamp = true;
 
-            if (previous) {
-                let previousMoment = moment(previous.timestamp);
-                let previousDuration = moment.duration(currentMoment.diff(previousMoment));
-                prevBySameAuthor = previous.sender === current.sender;
+                if (previous) {
+                    let previousMoment = moment(previous.timestamp);
+                    let previousDuration = moment.duration(currentMoment.diff(previousMoment));
+                    prevBySameAuthor = previous.sender === current.sender;
 
-                if (prevBySameAuthor && previousDuration.as('hours') < 1) {
-                    startsSequence = false;
+                    if (prevBySameAuthor && previousDuration.as('hours') < 1) {
+                        startsSequence = false;
+                    }
+
+                    if (previousDuration.as('hours') < 1) {
+                        showTimestamp = false;
+                    }
                 }
 
-                if (previousDuration.as('hours') < 1) {
-                    showTimestamp = false;
+                if (next) {
+                    let nextMoment = moment(next.timestamp);
+                    let nextDuration = moment.duration(nextMoment.diff(currentMoment));
+                    nextBySameAuthor = next.sender === current.sender;
+
+                    if (nextBySameAuthor && nextDuration.as('hours') < 1) {
+                        endsSequence = false;
+                    }
                 }
-            }
 
-            if (next) {
-                let nextMoment = moment(next.timestamp);
-                let nextDuration = moment.duration(nextMoment.diff(currentMoment));
-                nextBySameAuthor = next.sender === current.sender;
-
-                if (nextBySameAuthor && nextDuration.as('hours') < 1) {
-                    endsSequence = false;
+                if (i === messageCount - 1) {
+                    lastMessageTimestamp = current.timestamp;
+                    console.log(lastMessageTimestamp);
                 }
+
+                tempMessages.push(
+                    <Message
+                        key={i}
+                        isMine={isMine}
+                        startsSequence={startsSequence}
+                        endsSequence={endsSequence}
+                        showTimestamp={showTimestamp}
+                        data={current}
+                        sender={username}
+                        recipient={friend}
+                    />
+                );
+
+                // Proceed to the next message.
+                i += 1;
             }
-
-            if(i === messageCount-1) {
-                lastMessageTimestamp = current.timestamp;
-                console.log(lastMessageTimestamp);
-            }
-
-            tempMessages.push(
-                <Message
-                    key={i}
-                    isMine={isMine}
-                    startsSequence={startsSequence}
-                    endsSequence={endsSequence}
-                    showTimestamp={showTimestamp}
-                    data={current}
-                    sender={username}
-                    recipient={friend}
-                />
-            );
-
-            // Proceed to the next message.
-            i += 1;
         }
 
         return tempMessages;

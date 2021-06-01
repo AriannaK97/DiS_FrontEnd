@@ -6,9 +6,13 @@ import Toolbar from "../toolbar/toolbar.component";
 import ToolbarButton from "../toolbarButton/toolbarButton.component";
 import iosCog from '@iconify-icons/ion/ios-cog';
 import iosAddCircleOutline from '@iconify-icons/ion/ios-add-circle-outline';
+import {useParams} from "react-router";
+import Link from "@material-ui/core/Link";
 
 export default function Messenger(props) {
     const [friend, setFriend] = useState(null);
+
+
     return (
         <div className="messenger">
             <div className={"bottomChatList"}>
@@ -34,6 +38,7 @@ export default function Messenger(props) {
             <div className="scrollable sidebar" style={{backgroundColor: "#d6c8dc"}}>
                 <ConversationList data={friend} setter={setFriend}/>
             </div>
+
 
             <div className="scrollable content">
                 <MessageList data={friend} setter={setFriend}/>

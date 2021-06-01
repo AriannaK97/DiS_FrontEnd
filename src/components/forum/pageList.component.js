@@ -12,10 +12,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import ForumService from "../../services/forum.service";
 import {Nav} from "react-bootstrap";
 import {Route, useRouteMatch} from "react-router";
-import PageThreadList from "./pageThreadList";
-import Switch from "react-bootstrap/Switch";
-import ThreadPostList from "./threadPostList";
-import ThreadPostForm from "./threadPostForm";
+
 
 export default function PageList(props){
 
@@ -26,7 +23,6 @@ export default function PageList(props){
     const setShowThreadSection = props.setShowThreadSection;
     const setShowRating = props.setShowRating;
     const setCurrentRating = props.setCurrentRating;
-    const showThreadSectionPost = props.showThreadSectionPost;
     const username = props.username;
     const setPages = props.setPages;
     const classes = props.classes;
@@ -50,15 +46,12 @@ export default function PageList(props){
     }
 
     let pagesList = null;
-    let pageListSwitch = null;
     if(pages){
         pagesList = pages.map(page => (
-                // <Nav.Link id={page.pageId} href={`${url}/pages/${page.pageId}`} >
                 <ListItem id={page.pageId} button key={page.title} onClick={()=>selectPage(page.pageId, page.title, page.currentUserRating)} >
                     <ListItemIcon><ClassIcon /></ListItemIcon>
                     <ListItemText primary={page.title}/>
                 </ListItem>
-                // </Nav.Link>
             )
         );
     }
@@ -82,10 +75,6 @@ export default function PageList(props){
                     </List>
                 </AccordionDetails>
             </Accordion>
-            {/*<Switch>*/}
-            {/*    <Route exact path={`${url}/pages/:pageId`}><PageThreadList url={url}/></Route>*/}
-            {/*    /!*<Route exact path={`${url}/pages/:pageId/addPage`} component={PageForm}/>*!/*/}
-            {/*</Switch>*/}
         </div>
 
     );

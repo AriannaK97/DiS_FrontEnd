@@ -7,6 +7,7 @@ const API_URL = 'http://localhost:8080/forum';
 class ForumService{
 
     errorHandling(error) {
+        console.log(error);
         if (error.response.status === 401) {
             window.location.href = '/login';
         }else if(error.response.status >= 300 || error.response.status <= 200){
@@ -42,6 +43,10 @@ class ForumService{
             { headers: authHeader() }).catch(err => {this.errorHandling(err);});
     }
 
+    deleteForumThreadPostUpVote(threadPostId, username){
+        return axios.delete(API_URL+"/page/thread/threadPost/upvote",
+            {threadPostId, username}, { headers: authHeader() }).catch(err => {this.errorHandling(err);});
+    }
 
     getPage(id= null, title= null){
         if(id !== null){
@@ -75,10 +80,8 @@ class ForumService{
 
     getThreadPosts(threadId, currentUsername){
         console.log(threadId);
-        if(threadId!==null) {
-            return axios.get(API_URL + "/page/thread/" + threadId + "/threadposts/?currentUsername=" + currentUsername,
-                {headers: authHeader()}).catch(err => {this.errorHandling(err);});
-        }
+        const req = API_URL + "/page/thread/" + threadId + "/threadposts/?currentUsername=" + currentUsername;
+        return axios.get(req,{headers: authHeader()})
     }
 
 }

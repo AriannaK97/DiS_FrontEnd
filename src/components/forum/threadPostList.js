@@ -69,7 +69,6 @@ export default function ThreadPostList(props){
     const classes = useStyles();
     const nullReactionState = useState(0);
     const upReactionState =  useState(1);
-    const downReactionState = useState(2);
     const currentUser = AuthService.getCurrentUser();
     const username = currentUser.user.username;
 
@@ -85,7 +84,11 @@ export default function ThreadPostList(props){
 
     const handleVotes = (threadPostId, username, reactionType) => {
         console.log(threadPostId, username)
-        ForumService.postForumThreadPostUpvote(threadPostId, username).then(response => response.status);
+        if(reactionType === 1) {
+            ForumService.postForumThreadPostUpvote(threadPostId, username).then(response => response.status);
+        }else if(reactionType === 0) {
+            ForumService.deleteForumThreadPostUpVote(threadPostId, username).then(response => response.status);
+        }
     }
 
     const renderVoteIcons = (postId, upVotes, currentUserReaction) => {

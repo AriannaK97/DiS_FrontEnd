@@ -18,6 +18,7 @@ import Tetris from "./components/errorPage/tetris"
 // import ThreadPostList from "./components/forum/threadPostList";
 // import PageForm from "./components/forum/pageForm";
 import SearchBarResultPageComponent from "./components/searchBar/searchBarResultPage.component";
+import MessageList from "./components/chat/messageList/messageList.component";
 
 
 class App extends Component {
@@ -49,7 +50,7 @@ class App extends Component {
     //const isLoggedIn = localStorage.getItem('token');
         const searchParam = '';
 
-        if(AuthService.getCurrentUser() == null){
+        if(AuthService.getCurrentUser() === null){
             return (
                 <Router>
                     <div className="App">
@@ -63,7 +64,7 @@ class App extends Component {
                                 <Navbar.Collapse className="justify-content-end navbarLinks" on>
                                     <Nav.Link className={"navbarLinksRight"} href="/testRegister">Register</Nav.Link>
                                     <Nav.Link className={"navbarLinksRight"} href="/login">Login</Nav.Link>
-                                    <Nav.Link className={"navbarLinksRight"} href="/errorPage">errorPage</Nav.Link>
+                                    {/*<Nav.Link className={"navbarLinksRight"} href="/errorPage">errorPage</Nav.Link>*/}
                                 </Navbar.Collapse>
                             </Col>
                         </Navbar>
@@ -114,8 +115,9 @@ class App extends Component {
                             <Route path="/feed" component={NewsFeed} />
                             <Route exact path="/forum" component={Forum} />
                             <Route path="/logout" component={LogOut} />
-                            <Route path="/messenger" component={Messenger} />
+                            <Route exact path="/messenger" component={Messenger} />
                             <Route path="/errorPage" component={Tetris} />
+                            {/*<Route path="/messenger/:userLogged/:name" component={Messenger} />*/}
                         </Switch>
                     </div>
                 </Router>
