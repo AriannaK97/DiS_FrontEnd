@@ -6,6 +6,7 @@ class AuthService {
 
     errorHandling(error) {
         if (error.response.status === 401) {
+            this.logout();
             window.location.href = '/testLogin';
         }
         else if (error.response.status >= 300 || error.response.status <= 200){

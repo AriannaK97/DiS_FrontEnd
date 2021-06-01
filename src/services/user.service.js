@@ -11,6 +11,7 @@ class UserService {
 
     errorHandling(error) {
         if (error.response.status === 401) {
+            AuthService.logout();
             window.location.href = '/login';
         }else if(error.response.status >= 300 || error.response.status <= 200){
             window.location.href = "/errorPage";

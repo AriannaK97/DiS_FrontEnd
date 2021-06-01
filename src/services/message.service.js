@@ -1,5 +1,6 @@
 import axios from 'axios';
 import authHeader from './auth-header';
+import AuthService from "./auth.service";
 
 const API_URL = 'http://localhost:8080/chat';
 
@@ -7,6 +8,7 @@ class MessageService{
 
     errorHandling(error) {
         if (error.response.status === 401) {
+            AuthService.logout();
             window.location.href = '/login';
         }else if(error.response.status >= 300 || error.response.status <= 200){
             window.location.href = "/errorPage";
