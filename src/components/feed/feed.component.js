@@ -17,6 +17,7 @@ import SentimentSatisfiedAltIcon from '@material-ui/icons/SentimentSatisfiedAlt'
 import SentimentVeryDissatisfiedIcon from '@material-ui/icons/SentimentVeryDissatisfied';
 import StarOutlineIcon from '@material-ui/icons/StarOutline';
 import ReactionList from "./reactionList.component";
+import {Badge} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -86,6 +87,30 @@ export default function FeedCard() {
         [],
     );
 
+    const renderContent = (post) => {
+        if(post.content === null){
+            return(
+                <p>There are new update in page {post.pageTitle}</p>
+            );
+        }else if(post.pageTitle === null){
+            return (
+                post.content
+            );
+        }
+    }
+
+    const renderTitle = (post) => {
+        if(post.username === null){
+            return(
+                <p>Forum Updates</p>
+            );
+        }else {
+            return (
+                post.username
+            );
+        }
+    }
+
     const handleReaction = (id, username, reactionType) => {
         console.log("test " + reactionType);
         if(reactionType === 0){
@@ -145,14 +170,6 @@ export default function FeedCard() {
                     </div>
                 );
             }
-        }else{
-            return(
-                <div>
-                    <IconButton aria-label="page rating">
-                        <StarOutlineIcon id={post.postId} style={{color: 'gray'}} />
-                    </IconButton>
-                </div>
-            );
         }
     }
 
@@ -171,12 +188,12 @@ export default function FeedCard() {
                                 <MoreVertIcon />
                             </IconButton>
                         }
-                        title={<strong style={{fontSize: 20}}>{post.username}</strong>}
+                        title={<strong style={{fontSize: 20}}>{renderTitle(post)}</strong>}
                         subheader={<small>{post.postTime}</small>}
                     />
                     <CardContent>
                         <Typography variant="body2" color="textSecondary" component="p" style={{ color:'whitesmoke', fontSize: 15}}>
-                            {post.content}
+                            {renderContent(post)}
                         </Typography>
                     </CardContent>
                     <CardActions disableSpacing>

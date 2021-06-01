@@ -5,6 +5,18 @@ import authHeader from './auth-header';
 const API_URL = 'http://localhost:8080/forum';
 
 class ForumService{
+
+    errorHandling(error) {
+        if (error.response.status === '403') {
+            window.location.href = '/login';
+        }else if(error.response.status >= 300 && error.response.status <= 199){
+            window.location.href = "/errorPage";
+        }
+        else {
+            console.log(error);
+        }
+    }
+
     postPage(title){
         return axios.post(API_URL+"/page", {title}, { headers: authHeader() });
     }
@@ -22,7 +34,7 @@ class ForumService{
     }
 
     postForumThreadPostUpvote(threadPostId, username){
-        return axios.post(API_URL+"/page/thread/threadPost/upvote", {threadPostId, username}, { headers: authHeader() });
+        return axios.post(API_URL+"/page/thread/threadPost/upvote", {threadPostId, username}, { headers: authHeader() }).catch(err => {this.errorHandling(err);});
     }
 
 

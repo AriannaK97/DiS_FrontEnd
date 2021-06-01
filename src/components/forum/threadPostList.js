@@ -84,31 +84,31 @@ export default function ThreadPostList(props){
     },[threadId])
 
     const handleVotes = (threadPostId, username, reactionType) => {
-        console.log(threadPostId, username);
+        console.log(threadPostId, username)
         ForumService.postForumThreadPostUpvote(threadPostId, username).then(response => response.status);
     }
 
-    const renderVoteIcons = (post) => {
-        console.log("here "+ post.id)
-        if(post.currentUserReaction === false || post.currentUserReaction === null ){
+    const renderVoteIcons = (postId, upVotes, currentUserReaction) => {
+        console.log("here "+ postId, upVotes, currentUserReaction)
+        if(currentUserReaction === false || currentUserReaction === null ){
             return(
                 <div>
                     <IconButton aria-label="add to favorites">
-                        <ThumbUpIcon id={post.id} style={{color: 'gray'}} onClick={() => handleVotes(post.id, username, upReactionState[0])}/>
+                        <ThumbUpIcon id={postId} style={{color: 'gray'}} onClick={() => handleVotes(postId, username, upReactionState[0])}/>
                     </IconButton>
                     <IconButton aria-label="upvote post">
-                        <UpVoteList upVotes={post.upVotes} />
+                        <UpVoteList upVotes={upVotes} />
                     </IconButton>
                 </div>
             );
-        }else if(post.currentUserReaction === true){
+        }else if(currentUserReaction === true){
             return(
                 <div>
                     <IconButton aria-label="upvote post">
-                        <ThumbUpIcon id={post.id} style={{color: 'forestgreen'}} onClick={() => handleVotes(post.id, username, nullReactionState[0])}/>
+                        <ThumbUpIcon id={postId} style={{color: 'forestgreen'}} onClick={() => handleVotes(postId, username, nullReactionState[0])}/>
                     </IconButton>
                     <IconButton aria-label="upvote post">
-                    <UpVoteList upVotes={post.upVotes} />
+                    <UpVoteList upVotes={upVotes} />
                     </IconButton>
                 </div>
             );
@@ -140,7 +140,8 @@ export default function ThreadPostList(props){
                     </CardContent>
                     {/*style={{marginLeft: "95%"}}*/}
                     <CardActions disableSpacing >
-                        {renderVoteIcons(post)}
+                        {renderVoteIcons(post.postId, post.upVotes, post.currentUserReaction)}
+                        {console.log(post)}
                     </CardActions>
                 </Card>
             </Grid>

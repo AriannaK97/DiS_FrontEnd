@@ -113,9 +113,6 @@ class App extends Component {
                             <Route path="/profile/:username" component={Profile} />
                             <Route path="/feed" component={NewsFeed} />
                             <Route exact path="/forum" component={Forum} />
-                            {/*<Route exact path={`/forum/pages/:pageId/:threadId`}><Forum mode={"thread"}/></Route>*/}
-                            {/*<Route exact path={`/forum/pages/:pageId/`}><Forum mode={"page"}/></Route>*/}
-                            {/*<Route exact path={`/forum/pages/:pageId/addPage`}><Forum mode={"add"}/></Route>*/}
                             <Route path="/logout" component={LogOut} />
                             <Route path="/messenger" component={Messenger} />
                             <Route path="/errorPage" component={Tetris} />

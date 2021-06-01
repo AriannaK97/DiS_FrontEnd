@@ -11,7 +11,9 @@ class UserService {
 
     errorHandling(error) {
         if (error.response.status === '403') {
-            window.location.href = '/testLogin';
+            window.location.href = '/login';
+        }else if(error.response.status >= 300 && error.response.status <= 199){
+            window.location.href = "/errorPage";
         }
         else {
             console.log(error);
@@ -19,15 +21,15 @@ class UserService {
     }
 
     getAllUsers() {
-        return axios.get(API_URL + 'users', { headers: authHeader() });
+        return axios.get(API_URL + 'users', { headers: authHeader() }).catch(err => {this.errorHandling(err);});
     }
 
     getModeratorBoard() {
-        return axios.get(API_URL + 'mod', { headers: authHeader() });
+        return axios.get(API_URL + 'mod', { headers: authHeader() }).catch(err => {this.errorHandling(err);});
     }
 
     getAdminBoard() {
-        return axios.get(API_URL + 'admin', { headers: authHeader() });
+        return axios.get(API_URL + 'admin', { headers: authHeader() }).catch(err => {this.errorHandling(err);});
     }
 
     postUserFeedPost(content, username){
@@ -48,15 +50,15 @@ class UserService {
     }
 
     getReaction(){
-        return axios.get('http://localhost:8080/feed/reaction', { headers: authHeader() })
+        return axios.get('http://localhost:8080/feed/reaction', { headers: authHeader() }).catch(err => {this.errorHandling(err);})
     }
 
     getSearch(searchParam){
-        return axios.get("http://localhost:8080/search/users/?keyword="+searchParam, { headers: authHeader() })
+        return axios.get("http://localhost:8080/search/users/?keyword="+searchParam, { headers: authHeader() }).catch(err => {this.errorHandling(err);})
     }
 
     deletePostReaction(postId, username){
-        return axios.delete("http://localhost:8080/feed/reaction/?postId="+postId+"&username="+username, { headers: authHeader() })
+        return axios.delete("http://localhost:8080/feed/reaction/?postId="+postId+"&username="+username, { headers: authHeader() }).catch(err => {this.errorHandling(err);})
     }
 }
 
