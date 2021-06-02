@@ -47,10 +47,10 @@ export default function FormDialog(props) {
         <div>
             <ListItem button onClick={handleClickOpen} style={{backgroundColor: "#ccb0e7"}}>
                 <ListItemIcon><AddCircleOutlineIcon/></ListItemIcon>
-                <ListItemText primary={"New ThreadPostList"}/>
+                <ListItemText primary={"New Thread"}/>
             </ListItem>
             <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-                <DialogTitle id="form-dialog-title">New ThreadPostList</DialogTitle>
+                <DialogTitle id="form-dialog-title">New Thread</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
                         To create a new thread, please enter its title here.
@@ -61,7 +61,7 @@ export default function FormDialog(props) {
                         aria-colspan={20}
                         margin="dense"
                         id="name"
-                        label="ThreadPostList Title"
+                        label="Thread Title"
                         type="text"
                         fullWidth
                         onChange={e => setTitle(e.target.value)}

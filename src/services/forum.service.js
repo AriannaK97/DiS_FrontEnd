@@ -21,8 +21,9 @@ class ForumService{
     }
 
     postPage(title){
+        console.log(title)
         return axios.post(API_URL+"/page", {title},
-            { headers: authHeader() }).catch(err => {this.errorHandling(err);});
+            { headers: authHeader() })//.catch(err => {this.errorHandling(err);});
     }
 
     postPageRating(username, pageId, pageTitle, rating){

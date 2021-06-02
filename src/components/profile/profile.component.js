@@ -19,11 +19,13 @@ import StarOutlineIcon from "@material-ui/icons/StarOutline";
 import {Redirect} from "react-router-dom";
 import {useParams} from "react-router";
 import ReactionList from "../feed/reactionList.component";
+import Fab from "@material-ui/core/Fab";
+import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 
 const useStyles = makeStyles((theme) => ({
     large: {
-        width: theme.spacing(8),
-        height: theme.spacing(8),
+        width: theme.spacing(10),
+        height: theme.spacing(10),
     },
     root: {
         // maxWidth: 345,
@@ -72,7 +74,9 @@ export default function Profile() {
     const classes = useStyles();
     const [currentUser, setCurrentUser] = useState();
     const [userColor, setUserColor] = useState();
-    //const userColour = currentUser.color;
+    const [firstName, setFirstName] = useState();
+    const [lastName, setLastName] = useState();
+    const [email, setEmail] = useState();
     const nullReactionState = useState(0);
     const happyReactionState =  useState(1);
     const sadReactionState = useState(2);
@@ -87,6 +91,9 @@ export default function Profile() {
             setUserFeedPosts(response.data.userFeedPosts);
             setCurrentUser(response.data);
             setUserColor(response.data.color);
+            setFirstName(response.data.firstName);
+            setLastName(response.data.lastName);
+            setEmail(response.data.email);
         })
         },
         [username],
@@ -102,6 +109,10 @@ export default function Profile() {
             UserService.postReaction(id, username, reactionType).then(response => response.status);
             return <Redirect to={"/feed"}/>
         }
+    }
+
+    const handleMessageButton = () => {
+        window.location.href = `/messenger`;
     }
 
     const renderReactionIcons = (post) => {
@@ -196,13 +207,18 @@ export default function Profile() {
 
 
     return (
-        <div className="container" style={{marginTop: "70px"}}>
-            <header className="jumbotron" style={{backgroundColor: "whitesmoke"}}>
-                <h3>
-                    <strong>{username}</strong>
+        <div className="container" style={{marginTop: "95px", marginBottom: "-60px"}}>
+            <header className="jumbotron" style={{margin:"auto", width: 500,backgroundColor: "#343a40", borderRadius: 16, borderWidth: 1,color: "whitesmoke !important"}}>
+                <h3 style={{marginTop: "-8%"}}>
+                    <strong style={{color: "whitesmoke"}}>{username}</strong>
                 </h3>
+                <h6 style={{color: "whitesmoke"}}>{firstName} {lastName} </h6>
+                <h7 style={{color: "whitesmoke"}}>{email}</h7>
                 <Avatar alt={username} aria-label="post" className={classes.large} style={{backgroundColor: userColor, margin:"20px auto -30px auto"}}/>
             </header>
+            <Fab size={"large"} color="secondary" aria-label="edit" style={{margin: "-11% auto auto 35%", zIndex: 2, backgroundColor: "#8a37ea"}} onClick={handleMessageButton}>
+                <ChatBubbleOutlineIcon />
+            </Fab>
             <Grid container direction="row" justify="center" alignItems="center" className={classes.alignItemsAndJustifyContent}>
                 <FormDialog username={username}/>
                 {cardsArray}

@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
     postButton:{
         // margin: "2% auto auto 85%",
         zIndex: 2,
+        position: "sticky"
         // marginRight: theme.spacing(1),
     },
     dialog:{
