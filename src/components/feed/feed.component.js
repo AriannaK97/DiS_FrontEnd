@@ -15,7 +15,7 @@ import Grid from "@material-ui/core/Grid";
 import FormDialog from "./postForm.component";
 import SentimentSatisfiedAltIcon from '@material-ui/icons/SentimentSatisfiedAlt';
 import SentimentVeryDissatisfiedIcon from '@material-ui/icons/SentimentVeryDissatisfied';
-import StarOutlineIcon from '@material-ui/icons/StarOutline';
+import ClassIcon from '@material-ui/icons/Class';
 import ReactionList from "./reactionList.component";
 import {Badge} from "@material-ui/core";
 
@@ -123,7 +123,19 @@ export default function FeedCard() {
         }
     }
 
-    //todo: for forum posts
+    const renderAvatar = (post) => {
+        if(post.content !== null){
+            return(
+                <Avatar alt={post.username} aria-label="post" className={classes.avatar} style={{backgroundColor: post.userColor}}/>
+            )
+        } else {
+            return(
+                <Avatar alt={post.username} aria-label="post" className={classes.avatar} style={{backgroundColor: "#8a37ea"}}>
+                    <ClassIcon/>
+                </Avatar>
+            )
+        }
+    }
 
     const renderReactionIcons = (post) => {
         if(post.pageTitle === null){
@@ -180,9 +192,7 @@ export default function FeedCard() {
                 <Card id={post.id} style={{ color:'whitesmoke'}} className={classes.root}>
                     <CardHeader classes={{title: classes.CardHeader,subheader: classes.CardHeader}}
                         style={{ color:'whitesmoke'}}
-                        avatar={
-                            <Avatar alt={post.username} aria-label="post" className={classes.avatar} style={{backgroundColor: post.userColor}}/>
-                        }
+                        avatar={renderAvatar(post)}
                         action={
                             <IconButton aria-label="settings" style={{color: 'gray'}}>
                                 <MoreVertIcon />
