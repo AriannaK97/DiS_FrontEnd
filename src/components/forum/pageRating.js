@@ -25,19 +25,19 @@ export default function PageRating(props) {
                 return(
                     <div>
                         <IconButton aria-label="page rating">
-                            <StarOutlineIcon style={{color: 'gray'}} onClick={handlePageRating(1)}/>
+                            <StarOutlineIcon style={{color: 'gray'}} onClick={()=>handlePageRating(1)}/>
                         </IconButton>
                         <IconButton aria-label="page rating">
-                            <StarOutlineIcon style={{color: 'gray'}} onClick={handlePageRating(2)}/>
+                            <StarOutlineIcon style={{color: 'gray'}} onClick={()=>handlePageRating(2)}/>
                         </IconButton>
                         <IconButton aria-label="page rating">
-                            <StarOutlineIcon style={{color: 'gray'}} onClick={handlePageRating(3)}/>
+                            <StarOutlineIcon style={{color: 'gray'}} onClick={()=>handlePageRating(3)}/>
                         </IconButton>
                         <IconButton aria-label="page rating">
-                            <StarOutlineIcon style={{color: 'gray'}} onClick={handlePageRating(4)}/>
+                            <StarOutlineIcon style={{color: 'gray'}} onClick={()=>handlePageRating(4)}/>
                         </IconButton>
                         <IconButton aria-label="page rating">
-                            <StarOutlineIcon style={{color: 'gray'}} onClick={handlePageRating(5)}/>
+                            <StarOutlineIcon style={{color: 'gray'}} onClick={()=>handlePageRating(5)}/>
                         </IconButton>
                     </div>
                 )
@@ -46,19 +46,19 @@ export default function PageRating(props) {
                 return(
                     <div>
                         <IconButton aria-label="page rating">
-                            <StarOutlineIcon style={{color: 'gold'}} onClick={handlePageRating(1)}/>
+                            <StarOutlineIcon style={{color: 'gold'}} onClick={()=>handlePageRating(1)}/>
                         </IconButton>
                         <IconButton aria-label="page rating">
-                            <StarOutlineIcon style={{color: 'gray'}} onClick={handlePageRating(2)}/>
+                            <StarOutlineIcon style={{color: 'gray'}} onClick={()=>handlePageRating(2)}/>
                         </IconButton>
                         <IconButton aria-label="page rating">
-                            <StarOutlineIcon style={{color: 'gray'}} onClick={handlePageRating(3)}/>
+                            <StarOutlineIcon style={{color: 'gray'}} onClick={()=>handlePageRating(3)}/>
                         </IconButton>
                         <IconButton aria-label="page rating">
-                            <StarOutlineIcon style={{color: 'gray'}} onClick={handlePageRating(4)}/>
+                            <StarOutlineIcon style={{color: 'gray'}} onClick={()=>handlePageRating(4)}/>
                         </IconButton>
                         <IconButton aria-label="page rating">
-                            <StarOutlineIcon style={{color: 'gray'}} onClick={handlePageRating(5)}/>
+                            <StarOutlineIcon style={{color: 'gray'}} onClick={()=>handlePageRating(5)}/>
                         </IconButton>
                     </div>
                 )
@@ -66,19 +66,19 @@ export default function PageRating(props) {
                 return(
                     <div>
                         <IconButton aria-label="page rating">
-                            <StarOutlineIcon style={{color: 'gold'}} onClick={handlePageRating(1)}/>
+                            <StarOutlineIcon style={{color: 'gold'}} onClick={()=>handlePageRating(1)}/>
                         </IconButton>
                         <IconButton aria-label="page rating">
-                            <StarOutlineIcon style={{color: 'gold'}} onClick={handlePageRating(2)}/>
+                            <StarOutlineIcon style={{color: 'gold'}} onClick={()=>handlePageRating(2)}/>
                         </IconButton>
                         <IconButton aria-label="page rating">
-                            <StarOutlineIcon style={{color: 'gray'}} onClick={handlePageRating(3)}/>
+                            <StarOutlineIcon style={{color: 'gray'}} onClick={()=>handlePageRating(3)}/>
                         </IconButton>
                         <IconButton aria-label="page rating">
-                            <StarOutlineIcon style={{color: 'gray'}} onClick={handlePageRating(4)}/>
+                            <StarOutlineIcon style={{color: 'gray'}} onClick={()=>handlePageRating(4)}/>
                         </IconButton>
                         <IconButton aria-label="page rating">
-                            <StarOutlineIcon style={{color: 'gray'}} onClick={handlePageRating(5)}/>
+                            <StarOutlineIcon style={{color: 'gray'}} onClick={()=>handlePageRating(5)}/>
                         </IconButton>
                     </div>
                 )
@@ -86,19 +86,19 @@ export default function PageRating(props) {
                 return(
                     <div>
                         <IconButton aria-label="page rating">
-                            <StarOutlineIcon style={{color: 'gold'}} onClick={handlePageRating(1)}/>
+                            <StarOutlineIcon style={{color: 'gold'}} onClick={()=>handlePageRating(1)}/>
                         </IconButton>
                         <IconButton aria-label="page rating">
-                            <StarOutlineIcon style={{color: 'gold'}} onClick={handlePageRating(2)}/>
+                            <StarOutlineIcon style={{color: 'gold'}} onClick={()=>handlePageRating(2)}/>
                         </IconButton>
                         <IconButton aria-label="page rating">
-                            <StarOutlineIcon style={{color: 'gold'}} onClick={handlePageRating(3)}/>
+                            <StarOutlineIcon style={{color: 'gold'}} onClick={()=>handlePageRating(3)}/>
                         </IconButton>
                         <IconButton aria-label="page rating">
-                            <StarOutlineIcon style={{color: 'gray'}} onClick={handlePageRating(4)}/>
+                            <StarOutlineIcon style={{color: 'gray'}} onClick={()=>handlePageRating(4)}/>
                         </IconButton>
                         <IconButton aria-label="page rating">
-                            <StarOutlineIcon style={{color: 'gray'}} onClick={handlePageRating(5)}/>
+                            <StarOutlineIcon style={{color: 'gray'}} onClick={()=>handlePageRating(5)}/>
                         </IconButton>
                     </div>
                 )
@@ -106,19 +106,19 @@ export default function PageRating(props) {
                 return(
                     <div>
                         <IconButton aria-label="page rating">
-                            <StarOutlineIcon style={{color: 'gold'}} onClick={handlePageRating(1)}/>
+                            <StarOutlineIcon style={{color: 'gold'}} onClick={()=>handlePageRating(1)}/>
                         </IconButton>
                         <IconButton aria-label="page rating">
-                            <StarOutlineIcon style={{color: 'gold'}} onClick={handlePageRating(2)}/>
+                            <StarOutlineIcon style={{color: 'gold'}} onClick={()=>handlePageRating(2)}/>
                         </IconButton>
                         <IconButton aria-label="page rating">
-                            <StarOutlineIcon style={{color: 'gold'}} onClick={handlePageRating(3)}/>
+                            <StarOutlineIcon style={{color: 'gold'}} onClick={()=>handlePageRating(3)}/>
                         </IconButton>
                         <IconButton aria-label="page rating">
-                            <StarOutlineIcon style={{color: 'gold'}} onClick={handlePageRating(4)}/>
+                            <StarOutlineIcon style={{color: 'gold'}} onClick={()=>handlePageRating(4)}/>
                         </IconButton>
                         <IconButton aria-label="page rating">
-                            <StarOutlineIcon style={{color: 'gray'}} onClick={handlePageRating(5)}/>
+                            <StarOutlineIcon style={{color: 'gray'}} onClick={()=>handlePageRating(5)}/>
                         </IconButton>
                     </div>
                 )
@@ -126,19 +126,19 @@ export default function PageRating(props) {
                 return(
                     <div>
                         <IconButton aria-label="page rating">
-                            <StarOutlineIcon style={{color: 'gold'}} onClick={handlePageRating(1)}/>
+                            <StarOutlineIcon style={{color: 'gold'}} onClick={()=>handlePageRating(1)}/>
                         </IconButton>
                         <IconButton aria-label="page rating">
-                            <StarOutlineIcon style={{color: 'gold'}} onClick={handlePageRating(2)}/>
+                            <StarOutlineIcon style={{color: 'gold'}} onClick={()=>handlePageRating(2)}/>
                         </IconButton>
                         <IconButton aria-label="page rating">
-                            <StarOutlineIcon style={{color: 'gold'}} onClick={handlePageRating(3)}/>
+                            <StarOutlineIcon style={{color: 'gold'}} onClick={()=>handlePageRating(3)}/>
                         </IconButton>
                         <IconButton aria-label="page rating">
-                            <StarOutlineIcon style={{color: 'gold'}} onClick={handlePageRating(4)}/>
+                            <StarOutlineIcon style={{color: 'gold'}} onClick={()=>handlePageRating(4)}/>
                         </IconButton>
                         <IconButton aria-label="page rating">
-                            <StarOutlineIcon style={{color: 'gold'}} onClick={handlePageRating(5)}/>
+                            <StarOutlineIcon style={{color: 'gold'}} onClick={()=>handlePageRating(5)}/>
                         </IconButton>
                     </div>
                 )
