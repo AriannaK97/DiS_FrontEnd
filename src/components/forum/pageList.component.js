@@ -4,19 +4,16 @@ import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import List from "@material-ui/core/List";
 import PageForm from "./pageForm";
-import React, {useEffect, Fragment} from "react";
+import React, {useEffect} from "react";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ClassIcon from "@material-ui/icons/Class";
 import ListItemText from "@material-ui/core/ListItemText";
 import ForumService from "../../services/forum.service";
-import {Nav} from "react-bootstrap";
-import {Route, useRouteMatch} from "react-router";
 
 
 export default function PageList(props){
 
-    let { path, url } = useRouteMatch();
     const setSelectedPage = props.setSelectedPage;
     const setSelectedPageTitle = props.setSelectedPageTitle;
     const setSelectedThreadName = props.setSelectedThreadName;

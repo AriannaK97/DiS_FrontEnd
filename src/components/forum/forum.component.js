@@ -52,8 +52,6 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function PermanentDrawerLeft(props) {
-    let { path, url } = useRouteMatch();
-    // let { page.title } = useParams();
     const classes = useStyles();
     const [pages, setPages] = useState([ ]);
     const [selectedPage, setSelectedPage] = useState(null);
@@ -68,8 +66,6 @@ export default function PermanentDrawerLeft(props) {
     const currentUser = AuthService.getCurrentUser();
     const username = currentUser.user.username;
     const [showThreadPosts, setShowThreadPosts] = useState(false);
-
-    let { pageId, threadId } = useParams();
 
 
     let threadSection;
