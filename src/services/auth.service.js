@@ -7,7 +7,7 @@ class AuthService {
     errorHandling(error) {
         if (error.response.status === 401) {
             this.logout();
-            window.location.href = '/testLogin';
+            window.location.href = '/login';
         }
         else if (error.response.status >= 300 || error.response.status <= 200){
             window.location.href = '/errorPage';
@@ -30,7 +30,7 @@ class AuthService {
                 }
 
                 return response.data;
-            }).catch(err => {this.errorHandling(err);});
+            })//.catch(err => {this.errorHandling(err);});
     }
 
     logout() {
@@ -44,7 +44,7 @@ class AuthService {
             email,
             phone,
             password
-        }).catch(err => {this.errorHandling(err);});
+        })//.catch(err => {this.errorHandling(err);});
     }
 
     getCurrentUser() {

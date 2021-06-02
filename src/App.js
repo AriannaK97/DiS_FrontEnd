@@ -67,7 +67,7 @@ class App extends Component {
                             <Col className="d-md-flex d-block flex-row mx-md-auto mx-0"/>
                             <Col className="d-md-flex d-block flex-row mx-md-auto mx-0">
                                 <Navbar.Collapse className="justify-content-end navbarLinks" on>
-                                    <Nav.Link className={"navbarLinksRight"} href="/testRegister">Register</Nav.Link>
+                                    <Nav.Link className={"navbarLinksRight"} href="/register">Register</Nav.Link>
                                     <Nav.Link className={"navbarLinksRight"} href="/login">Login</Nav.Link>
                                     {/*<Nav.Link className={"navbarLinksRight"} href="/errorPage">errorPage</Nav.Link>*/}
                                 </Navbar.Collapse>
